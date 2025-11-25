@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>CozyHub - Get Key</title>
+<title>Cozy Hub - Get Key</title>
 
 <style>
     body {
@@ -12,151 +12,161 @@
         align-items: center;
         justify-content: center;
         font-family: "Segoe UI", sans-serif;
+        background: #05070d;
         overflow: hidden;
         color: white;
-        background: black;
     }
 
-    /* NỀN SAO RÕ HD + CHUYỂN ĐỘNG CHÉO */
-    #space-bg {
+    /* Nền particle nhẹ */
+    #particles {
         position: fixed;
         top: 0;
         left: 0;
-        width: 200%;
-        height: 200%;
-        background-image: url("https://i.imgur.com/0Z8DsgY.jpeg");
-        background-size: cover;
-        background-position: center;
-        z-index: -2;
-        animation: drift 40s linear infinite;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
     }
 
-    @keyframes drift {
-        0%   { transform: translate(0, 0); }
-        100% { transform: translate(-20%, -20%); }
+    .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: cyan;
+        border-radius: 50%;
+        animation: floatUp linear infinite;
+        opacity: 0.7;
     }
 
-    /* KHUNG CHÍNH – NỀN ĐEN ĐỤC + VIỀN RAINBOW */
+    @keyframes floatUp {
+        0% { transform: translateY(120vh) translateX(0px); }
+        100% { transform: translateY(-20vh) translateX(40px); }
+    }
+
+    /* ===== KHUNG CHÍNH RỘNG NHẸ + VIỀN RAINBOW CHẠY ===== */
     .container {
-        width: 580px;
-        padding: 70px 50px;
-        background: rgba(0, 0, 0, 0.55);
+        width: 540px; /* Rộng hơn nhẹ */
+        padding: 45px;
         border-radius: 25px;
-        backdrop-filter: blur(12px);
-        box-shadow: 0 0 50px rgba(0,0,0,0.7);
-        position: relative;
         text-align: center;
+        position: relative;
+        backdrop-filter: blur(16px);
+        background: rgba(0,0,0,0.45);
+        box-shadow: 0 0 45px rgba(0,0,0,0.6);
+        animation: fadeIn 0.9s ease;
     }
 
+    @keyframes fadeIn {
+        from {opacity:0; transform:scale(0.95);}
+        to {opacity:1; transform:scale(1);}
+    }
+
+    /* Viền rainbow chạy quanh khung */
     .container::before {
         content: "";
         position: absolute;
-        inset: -3px;
+        top: -3px;
+        left: -3px;
+        right: -3px;
+        bottom: -3px;
         border-radius: 28px;
+        padding: 4px;
         background: linear-gradient(120deg,
             red, orange, yellow, lime, cyan, blue, violet, red);
-        background-size: 600%;
-        animation: borderRainbow 12s linear infinite;
+        background-size: 400%;
+        animation: borderRainbow 6s linear infinite;
         z-index: -1;
     }
 
     @keyframes borderRainbow {
-        0% { background-position: 0%; }
-        100% { background-position: 600%; }
+        0% { background-position: 0% }
+        100% { background-position: 400% }
     }
 
-    /* LOGO LỚN + RAINBOW MÀU NHẠT */
+    /* LOGO + viền glow */
     .logo-wrapper {
         display: inline-block;
-        padding: 12px;
+        padding: 8px;
         border-radius: 50%;
-        position: relative;
+        animation: glowPulse 3s ease-in-out infinite;
     }
 
-    .logo-wrapper::before {
-        content: "";
-        position: absolute;
-        inset: -8px;
-        border-radius: 50%;
-        background: conic-gradient(
-            rgba(255,0,0,0.35),
-            rgba(255,165,0,0.35),
-            rgba(255,255,0,0.35),
-            rgba(0,255,0,0.35),
-            rgba(0,255,255,0.35),
-            rgba(0,0,255,0.35),
-            rgba(255,0,255,0.35),
-            rgba(255,0,0,0.35)
-        );
-        animation: rainbowLogo 10s linear infinite;
-        z-index: -1;
-        filter: blur(3px);
-    }
-
-    @keyframes rainbowLogo {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+    @keyframes glowPulse {
+        0% { box-shadow: 0 0 25px cyan; }
+        50% { box-shadow: 0 0 45px violet; }
+        100% { box-shadow: 0 0 25px cyan; }
     }
 
     .logo {
-        width: 190px;
-        height: 190px;
+        width: 165px;
+        height: 165px;
         border-radius: 50%;
         object-fit: cover;
-        border: 3px solid rgba(255,255,255,0.6);
+        border: 3px solid rgba(255,255,255,0.8);
     }
 
-    /* TÊN COZYHUB */
-    .title {
-        margin-top: 20px;
-        font-size: 46px;
-        font-weight: bold;
+    /* TEXT RAINBOW */
+    .rainbow-text {
+        font-size: 45px;
+        font-weight: 700;
+        margin: 20px 0 10px;
         background: linear-gradient(90deg,
             red, orange, yellow, lime, cyan, blue, violet, red);
         background-size: 400%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        animation: textFlow 6s linear infinite;
+        animation: rainbowText 5s linear infinite;
     }
 
-    @keyframes textFlow {
+    @keyframes rainbowText {
         0% { background-position: 0%; }
         100% { background-position: 400%; }
     }
 
-    /* NÚT GET KEY */
-    .getkey {
-        margin-top: 25px;
-        padding: 18px 90px;
+    /* Decorative line */
+    .decor-line {
+        width: 80%;
+        height: 3px;
+        margin: 12px auto 22px;
+        background: linear-gradient(90deg, cyan, violet, cyan);
+        border-radius: 10px;
+        box-shadow: 0 0 12px cyan;
+    }
+
+    /* Nút Get Key */
+    button {
+        padding: 18px 60px;
         font-size: 26px;
         border-radius: 18px;
-        border: 2px solid rgba(255,255,255,0.4);
-        background: rgba(0, 0, 0, 0.4);
-        color: #ff4d4d;
+        border: 2px solid rgba(255,255,255,0.7);
+        background: rgba(255,255,255,0.15);
+        color: white;
         cursor: pointer;
-        transition: 0.25s;
+        transition: 0.25s ease;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 22px cyan;
     }
 
-    .getkey:hover {
-        transform: scale(1.12);
+    button:hover {
+        transform: scale(1.13);
+        background: rgba(255,255,255,0.3);
         border-color: white;
-        box-shadow: 0 0 25px #ff4d4d;
+        box-shadow: 0 0 35px cyan;
     }
 
-    /* ICON XÃ HỘI */
+    /* ICON SOCIAL */
     .socials {
-        margin-top: 35px;
+        margin-top: 30px;
         display: flex;
         justify-content: center;
-        gap: 55px;
+        gap: 35px;
     }
 
     .socials img {
-        width: 65px;
-        height: 65px;
+        width: 60px;
+        height: 60px;
         cursor: pointer;
+        filter: drop-shadow(0 0 10px cyan);
         transition: 0.25s;
-        filter: drop-shadow(0 0 12px cyan);
     }
 
     .socials img:hover {
@@ -168,17 +178,31 @@
 
 <body>
 
-<div id="space-bg"></div>
+<!-- Nền particle -->
+<div id="particles"></div>
+<script>
+    const particles = document.getElementById("particles");
+    for (let i = 0; i < 110; i++) {
+        const p = document.createElement("div");
+        p.classList.add("particle");
+        p.style.left = Math.random() * 100 + "vw";
+        p.style.animationDuration = 6 + Math.random()*8 + "s";
+        particles.appendChild(p);
+    }
+</script>
 
+<!-- KHUNG CHÍNH -->
 <div class="container">
 
     <div class="logo-wrapper">
-        <img class="logo" src="/mnt/data/DC629523-8CD7-43E7-B862-E69C6CAB2D8A.png">
+        <img class="logo" src="/mnt/data/57C372A7-2121-4F1D-9F54-62047115A945.png">
     </div>
 
-    <div class="title">CozyHub</div>
+    <div class="rainbow-text">CozyHub</div>
 
-    <button class="getkey" onclick="location.href='https://link4m.com/jkwDHoPx'">
+    <div class="decor-line"></div>
+
+    <button onclick="location.href='https://link4m.com/jkwDHoPx'">
         Get Key
     </button>
 
