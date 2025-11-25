@@ -14,68 +14,56 @@
         font-family: "Segoe UI", sans-serif;
         color: white;
         overflow: hidden;
-
-        /* NỀN WEB GIỮ NGUYÊN, CHỈ MÀU ĐEN XANH */
-        background: #0a0f1f;
+        background: url("https://cdn.wallpapersafari.com/25/2/O2dJmo.gif");
+        background-size: cover;
+        background-position: center;
+        animation: bgMove 30s linear infinite;
     }
 
-    /* ===== NỀN GAMING CHUYỂN ĐỘNG ===== */
-    #particles {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        overflow: hidden;
+    /* === NỀN GALAXY CHUYỂN ĐỘNG === */
+    @keyframes bgMove {
+        0% { background-position: 0 0; }
+        100% { background-position: 1000px 1000px; }
     }
 
-    .particle {
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        background: rgb(0, 255, 255);
-        border-radius: 50%;
-        animation: floatUp linear infinite;
-        opacity: 0.8;
-    }
-
-    @keyframes floatUp {
-        0% { transform: translateY(120vh) translateX(0px); }
-        100% { transform: translateY(-20vh) translateX(50px); }
-    }
-
-    /* ===== KHUNG CHÍNH (NỀN GIỮ NGUYÊN) + VIỀN RAINBOW CHẠY ===== */
+    /* === KHUNG CHÍNH VỚI VIỀN SÁNG CHẠY QUANH === */
     .container {
-        background: rgba(0, 0, 0, 0.45); /* NỀN KHUNG NHƯ CŨ */
+        position: relative;
+        background: rgba(0, 0, 0, 0.45);
         padding: 60px;
         border-radius: 24px;
         backdrop-filter: blur(12px);
         text-align: center;
         width: 540px;
         animation: fadeIn 1s ease;
-        box-shadow: 0px 0px 50px rgba(0,0,0,0.55);
-        position: relative;
-        z-index: 10;
-        isolation: isolate;
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.55);
+        overflow: hidden;
     }
 
-    /* VIỀN SÁNG CHẠY QUANH KHUNG CHÍNH */
+    /* VIỀN SÁNG CHẠY */
     .container::before {
         content: "";
         position: absolute;
-        inset: -3px;
-        border-radius: 28px;
-        background: linear-gradient(120deg,
-            red, orange, yellow, lime, cyan, blue, violet, red);
-        background-size: 500%;
-        animation: borderShift 12s linear infinite;
+        top: -3px;
+        left: -3px;
+        width: calc(100% + 6px);
+        height: calc(100% + 6px);
+        border-radius: 24px;
+        background: linear-gradient(
+            90deg,
+            cyan,
+            magenta,
+            blue,
+            cyan
+        );
+        background-size: 400%;
+        animation: borderMove 6s linear infinite;
         z-index: -1;
     }
 
-    @keyframes borderShift {
+    @keyframes borderMove {
         0% { background-position: 0%; }
-        100% { background-position: 500%; }
+        100% { background-position: 400%; }
     }
 
     @keyframes fadeIn {
@@ -83,20 +71,18 @@
         to { opacity: 1; transform: translateY(0); }
     }
 
-    /* LOGO COZY HUB (TO HƠN) */
     .logo {
         width: 180px;
         height: 180px;
         border-radius: 50%;
         object-fit: cover;
         border: 3px solid rgba(255,255,255,0.7);
+        margin-bottom: 22px;
         box-shadow:
             0 0 16px rgba(255,255,255,0.8),
-            0 0 30px rgba(255,255,255,0.5);
-        margin-bottom: 22px;
+            0 0 30px rgba(0,200,255,0.5);
     }
 
-    /* TÊN RAINBOW (TO HƠN) */
     .rainbow-text {
         font-size: 46px;
         font-weight: bold;
@@ -119,7 +105,6 @@
         margin-bottom: 25px;
     }
 
-    /* GET KEY BUTTON (DÀI & TO HƠN) */
     button {
         padding: 20px 80px;
         font-size: 26px;
@@ -129,23 +114,17 @@
         backdrop-filter: blur(10px);
         cursor: pointer;
         color: white;
-        box-shadow:
-            0 0 14px rgba(0,200,255,0.8),
-            0 0 30px rgba(0,200,255,0.6);
         transition: 0.25s ease;
+        box-shadow: 0 0 20px cyan;
     }
 
     button:hover {
         transform: scale(1.1);
         background: rgba(255,255,255,0.25);
         border-color: white;
-        box-shadow:
-            0 0 22px rgba(0,255,255,1),
-            0 0 40px rgba(0,255,255,0.8),
-            0 0 60px rgba(0,255,255,0.7);
+        box-shadow: 0 0 40px cyan;
     }
 
-    /* SOCIAL ICONS (TO HƠN & CÁCH XA HƠN) */
     .socials {
         margin-top: 30px;
         display: flex;
@@ -170,24 +149,9 @@
 
 <body>
 
-<!-- NỀN GAMING CHUYỂN ĐỘNG -->
-<div id="particles"></div>
-<script>
-    const particles = document.getElementById("particles");
-    for (let i = 0; i < 80; i++) {
-        const p = document.createElement("div");
-        p.classList.add("particle");
-        p.style.left = Math.random() * 100 + "vw";
-        p.style.animationDuration = 5 + Math.random() * 10 + "s";
-        p.style.opacity = 0.3 + Math.random() * 0.7;
-        particles.appendChild(p);
-    }
-</script>
-
-<!-- KHUNG CHÍNH CÓ VIỀN SÁNG -->
 <div class="container">
 
-    <img class="logo" src="https://media.discordapp.net/attachments/1439658574187069450/1440358993359802378/IMG_0830.png" alt="Cozy Hub Logo">
+    <img class="logo" src="https://media.discordapp.net/attachments/1439658574187069450/1440358993359802378/IMG_0830.png">
 
     <div class="rainbow-text">Cozy Hub</div>
 
@@ -198,12 +162,8 @@
     </button>
 
     <div class="socials">
-        <a href="https://youtube.com/@voao-v2g?si=UaX9AtcZJmDwiIlU" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
-        </a>
-        <a href="https://www.tiktok.com/@cozyhub15" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/3046/3046126.png">
-        </a>
+        <a href="https://youtube.com/@voao-v2g" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
+        <a href="https://www.tiktok.com/@cozyhub15" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046126.png"></a>
     </div>
 
 </div>
