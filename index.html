@@ -2,171 +2,198 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Cozy Hub - Get Key</title>
+<title>Cozy Hub</title>
 
 <style>
     body {
         margin: 0;
         height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: "Segoe UI", sans-serif;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
         color: white;
-        overflow: hidden;
-        background: url("https://cdn.wallpapersafari.com/25/2/O2dJmo.gif");
-        background-size: cover;
-        background-position: center;
-        animation: bgMove 30s linear infinite;
+        background: #030b1a;
     }
 
-    /* === NỀN GALAXY CHUYỂN ĐỘNG === */
-    @keyframes bgMove {
-        0% { background-position: 0 0; }
-        100% { background-position: 1000px 1000px; }
-    }
-
-    /* === KHUNG CHÍNH VỚI VIỀN SÁNG CHẠY QUANH === */
-    .container {
-        position: relative;
-        background: rgba(0, 0, 0, 0.45);
-        padding: 60px;
-        border-radius: 24px;
-        backdrop-filter: blur(12px);
-        text-align: center;
-        width: 540px;
-        animation: fadeIn 1s ease;
-        box-shadow: 0 0 50px rgba(0, 0, 0, 0.55);
-        overflow: hidden;
-    }
-
-    /* VIỀN SÁNG CHẠY */
-    .container::before {
-        content: "";
-        position: absolute;
-        top: -3px;
-        left: -3px;
-        width: calc(100% + 6px);
-        height: calc(100% + 6px);
-        border-radius: 24px;
-        background: linear-gradient(
-            90deg,
-            cyan,
-            magenta,
-            blue,
-            cyan
-        );
-        background-size: 400%;
-        animation: borderMove 6s linear infinite;
+    /* CANVAS VŨ TRỤ */
+    #universe {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
         z-index: -1;
     }
 
-    @keyframes borderMove {
-        0% { background-position: 0%; }
-        100% { background-position: 400%; }
-    }
+    /* CARD */
+    .card {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -40%);
+        width: 430px;
+        height: 540px;
+        background: rgba(0, 0, 0, 0.35);
+        padding: 25px;
+        border-radius: 30px;
+        text-align: center;
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    .logo {
-        width: 180px;
-        height: 180px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 3px solid rgba(255,255,255,0.7);
-        margin-bottom: 22px;
         box-shadow:
-            0 0 16px rgba(255,255,255,0.8),
-            0 0 30px rgba(0,200,255,0.5);
+            0 0 40px rgba(0, 255, 255, 0.6),
+            0 0 80px rgba(0, 255, 255, 0.4),
+            0 0 120px rgba(0, 255, 255, 0.25),
+            0 0 160px rgba(0, 255, 255, 0.15);
+
+        backdrop-filter: blur(6px);
     }
 
-    .rainbow-text {
-        font-size: 46px;
+    /* LOGO GIỮA */
+    .logo {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        margin: 0 auto;
+        background: url('https://raw.githubusercontent.com/aovo4504-bit/Cozyhub/refs/heads/main/IMG_0830.png') center/cover;
+
+        box-shadow:
+            0 0 40px #00eaff,
+            0 0 70px #00eaff,
+            0 0 100px rgba(0, 255, 255, 0.5);
+        margin-bottom: 10px;
+    }
+
+    /* CHỮ RAINBOW CHẠY CHẬM */
+    .title {
+        font-size: 35px;
         font-weight: bold;
-        background: linear-gradient(90deg,
-            red, orange, yellow, lime, cyan, blue, violet, red);
-        background-size: 400%;
+        background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
         -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: rainbow 5s linear infinite;
-        margin-bottom: 14px;
+        color: transparent;
+        animation: rainbow 8s linear infinite;
+        margin-bottom: 12px;
     }
 
     @keyframes rainbow {
-        0% { background-position: 0% }
-        100% { background-position: 400% }
+        0% {background-position: 0%;}
+        100% {background-position: 400%;}
     }
 
-    p {
-        font-size: 20px;
-        margin-bottom: 25px;
+    .sub {
+        font-size: 16px;
+        color: #dcdcdc;
+        margin-bottom: 35px;
     }
 
-    button {
-        padding: 20px 80px;
-        font-size: 26px;
-        border-radius: 18px;
-        border: 2px solid rgba(255,255,255,0.6);
-        background: rgba(255,255,255,0.12);
-        backdrop-filter: blur(10px);
-        cursor: pointer;
+    /* NÚT GET KEY */
+    .btn {
+        padding: 16px 40px;
+        background: #111;
+        border: 2px solid #00eaff;
+        border-radius: 14px;
+        font-size: 22px;
         color: white;
-        transition: 0.25s ease;
-        box-shadow: 0 0 20px cyan;
-    }
+        cursor: pointer;
+        transition: 0.3s;
 
-    button:hover {
+        box-shadow:
+            0 0 25px #00eaff,
+            0 0 45px #00eaff;
+    }
+    .btn:hover {
         transform: scale(1.1);
-        background: rgba(255,255,255,0.25);
-        border-color: white;
-        box-shadow: 0 0 40px cyan;
+        box-shadow: 0 0 35px #00eaff, 0 0 65px #00eaff;
     }
 
-    .socials {
-        margin-top: 30px;
-        display: flex;
-        justify-content: center;
-        gap: 40px;
-    }
-
-    .socials img {
+    /* ICON SOCIAL */
+    .icons img {
         width: 65px;
-        height: 65px;
+        margin: 25px;
+        filter: drop-shadow(0 0 20px #00eaff);
         cursor: pointer;
         transition: 0.25s;
-        filter: drop-shadow(0 0 10px rgba(255,255,255,0.9));
+    }
+    .icons img:hover {
+        transform: scale(1.25);
+        filter: drop-shadow(0 0 35px #00eaff);
     }
 
-    .socials img:hover {
-        transform: scale(1.18);
-        filter: drop-shadow(0 0 16px rgba(255,255,255,1));
-    }
 </style>
 </head>
-
 <body>
 
-<div class="container">
+<!-- VŨ TRỤ -->
+<canvas id="universe"></canvas>
 
-    <img class="logo" src="https://media.discordapp.net/attachments/1439658574187069450/1440358993359802378/IMG_0830.png">
+<!-- KHUNG CARD -->
+<div class="card">
+    
+    <div class="logo"></div>
 
-    <div class="rainbow-text">Cozy Hub</div>
+    <div class="title">Cozy Hub</div>
+    <div class="sub">Bấm nút bên dưới để làm nhiệm vụ và nhận Key.</div>
 
-    <p>Bấm nút bên dưới để làm nhiệm vụ và nhận Key.</p>
-
-    <button onclick="location.href='https://link4m.com/jkwDHoPx'">
+    <button class="btn" onclick="window.location.href='https://link4m.com/jkwDHoPx'">
         Get Key
     </button>
 
-    <div class="socials">
-        <a href="https://youtube.com/@voao-v2g" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
-        <a href="https://www.tiktok.com/@cozyhub15" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046126.png"></a>
+    <div class="icons">
+        <a href="https://www.youtube.com/@VoAo-v2g" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+        </a>
+
+        <a href="https://www.tiktok.com/@cozyhub15" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
+        </a>
     </div>
 
 </div>
+
+<!-- SCRIPT SAO BAY -->
+<script>
+const canvas = document.getElementById('universe');
+const ctx = canvas.getContext('2d');
+
+let w, h;
+function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
+
+// Generate stars
+let stars = [];
+let count = 350;
+
+for (let i = 0; i < count; i++) {
+    stars.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        z: Math.random() * 3 + 1
+    });
+}
+
+function animate() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = "white";
+
+    for (let s of stars) {
+        let speed = s.z * 0.7;
+
+        s.y += speed;
+        if (s.y > h) {
+            s.y = 0;
+            s.x = Math.random() * w;
+        }
+
+        let size = s.z;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    requestAnimationFrame(animate);
+}
+animate();
+</script>
 
 </body>
 </html>
