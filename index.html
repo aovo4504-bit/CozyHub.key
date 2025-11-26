@@ -14,7 +14,7 @@
         background: #030b1a;
     }
 
-    /* Canvas vũ trụ (nền sao) */
+    /* Nền vũ trụ sao */
     #universe {
         position: fixed;
         inset: 0;
@@ -23,52 +23,43 @@
         z-index: -1;
     }
 
-    /* Khối bao card + icon để căn giữa */
-    .wrapper {
+    /* CARD TO RA */
+    .card {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 30px; /* khoảng cách giữa card và icon */
-    }
+        transform: translate(-50%, -45%);
+        width: 500px;              /* TO HƠN */
+        max-width: 92vw;
+        padding: 45px 35px;        /* PADDING RỘNG */
+        background: rgba(0, 0, 0, 0.88); /* NỀN ĐỤC TỐI */
+        border-radius: 35px;
 
-    /* CARD chính */
-    .card {
-        width: 430px;
-        max-width: 90vw;
-        background: rgba(0, 0, 0, 0.72); /* đục hơn để che nền */
-        border-radius: 30px;
-        padding: 40px 30px;
         text-align: center;
-
         box-shadow:
-            0 0 50px rgba(0, 255, 255, 0.6),
-            0 0 100px rgba(0, 255, 255, 0.35),
-            0 0 160px rgba(0, 255, 255, 0.2);
-
-        backdrop-filter: blur(5px);
+            0 0 75px rgba(0, 255, 255, 0.6),
+            0 0 150px rgba(0, 255, 255, 0.35),
+            0 0 220px rgba(0, 255, 255, 0.25);
+        backdrop-filter: blur(4px);
     }
 
-    /* LOGO ở giữa + glow mạnh */
+    /* LOGO */
     .logo {
-        width: 145px;
-        height: 145px;
+        width: 160px;
+        height: 160px;
         border-radius: 50%;
         margin: 0 auto 30px auto;
         background: url('https://raw.githubusercontent.com/aovo4504-bit/Cozyhub/refs/heads/main/IMG_0830.png') center/cover;
 
         box-shadow:
-            0 0 40px #00eaff,
-            0 0 70px #00eaff,
-            0 0 100px rgba(0, 255, 255, 0.6);
+            0 0 45px #00eaff,
+            0 0 90px #00eaff,
+            0 0 120px rgba(0, 255, 255, 0.6);
     }
 
-    /* Chữ Cozy Hub rainbow + viền sáng */
+    /* CHỮ COZY HUB – RAINBOW + GLOW */
     .title {
-        font-size: 36px;
+        font-size: 40px;
         font-weight: bold;
         margin-bottom: 25px;
 
@@ -76,11 +67,11 @@
         background-size: 400%;
         -webkit-background-clip: text;
         color: transparent;
-        animation: rainbow 8s linear infinite;
+        animation: rainbow 9s linear infinite;
 
         text-shadow:
-            0 0 15px #00eaff,
-            0 0 30px #00eaff;
+            0 0 20px #00eaff,
+            0 0 40px #00eaff;
     }
 
     @keyframes rainbow {
@@ -89,21 +80,22 @@
     }
 
     .sub {
-        font-size: 17px;
+        font-size: 18px;
         color: #dcdcdc;
-        margin-bottom: 35px;
+        margin-bottom: 40px;
     }
 
-    /* Nút Get Key – dài, chữ to, glow mạnh */
+    /* BUTTON GET KEY – RẤT DÀI + TO + GLOW */
     .btn {
-        width: 80%;
-        max-width: 320px;
-        padding: 18px 0;
-        background: #111;
-        border: 2px solid #00eaff;
-        border-radius: 14px;
+        width: 85%;
+        max-width: 380px;
+        padding: 20px 0;
 
-        font-size: 22px;
+        background: #0b0b0b;
+        border: 2px solid #00eaff;
+        border-radius: 16px;
+
+        font-size: 25px;
         font-weight: bold;
         color: white;
 
@@ -111,61 +103,57 @@
         transition: 0.3s;
 
         box-shadow:
-            0 0 35px #00eaff,
-            0 0 60px #00eaff;
-
-        margin: 0 auto;
+            0 0 40px #00eaff,
+            0 0 80px #00eaff;
+        margin: 0 auto 40px auto;
     }
 
     .btn:hover {
-        transform: scale(1.08);
+        transform: scale(1.07);
         box-shadow:
-            0 0 50px #00eaff,
-            0 0 80px #00eaff;
+            0 0 60px #00eaff,
+            0 0 110px #00eaff;
     }
 
-    /* Icon social dưới card */
+    /* ICON YOUTUBE + TIKTOK BÊN TRONG CARD */
     .icons {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 70px; /* cách xa nhau */
+        gap: 70px; /* ICON CÁCH XA NHAU */
     }
 
     .icons img {
-        width: 70px;
-        filter: drop-shadow(0 0 25px #00eaff);
+        width: 80px;  /* TO HƠN */
+        filter: drop-shadow(0 0 30px #00eaff);
         cursor: pointer;
         transition: 0.25s;
     }
 
     .icons img:hover {
         transform: scale(1.25);
-        filter: drop-shadow(0 0 40px #00eaff);
+        filter: drop-shadow(0 0 50px #00eaff);
     }
 </style>
+
 </head>
 <body>
 
-<!-- Nền vũ trụ -->
+<!-- NỀN VŨ TRỤ -->
 <canvas id="universe"></canvas>
 
-<!-- Khối chính: card + icon -->
-<div class="wrapper">
+<!-- CARD CHÍNH -->
+<div class="card">
 
-    <div class="card">
-        <div class="logo"></div>
+    <div class="logo"></div>
 
-        <div class="title">Cozy Hub</div>
+    <div class="title">Cozy Hub</div>
 
-        <div class="sub">
-            Bấm nút bên dưới để làm nhiệm vụ và nhận Key.
-        </div>
+    <div class="sub">Bấm nút bên dưới để làm nhiệm vụ và nhận Key.</div>
 
-        <button class="btn" onclick="window.location.href='https://link4m.com/jkwDHoPx'">
-            Get Key
-        </button>
-    </div>
+    <button class="btn" onclick="window.location.href='https://link4m.com/jkwDHoPx'">
+        Get Key
+    </button>
 
     <div class="icons">
         <a href="https://www.youtube.com/@VoAo-v2g" target="_blank">
@@ -176,10 +164,9 @@
             <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok">
         </a>
     </div>
-
 </div>
 
-<!-- Script nền sao chuyển động -->
+<!-- SCRIPT NỀN SAO CHUYỂN ĐỘNG -->
 <script>
 const canvas = document.getElementById('universe');
 const ctx = canvas.getContext('2d');
@@ -216,9 +203,8 @@ function animate() {
             s.x = Math.random() * w;
         }
 
-        let size = s.z;
         ctx.beginPath();
-        ctx.arc(s.x, s.y, size, 0, Math.PI * 2);
+        ctx.arc(s.x, s.y, s.z, 0, Math.PI * 2);
         ctx.fill();
     }
 
