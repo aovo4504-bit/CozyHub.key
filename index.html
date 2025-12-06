@@ -14,6 +14,7 @@
         color: white;
     }
 
+    /* NỀN VŨ TRỤ */
     #universe {
         position: fixed;
         inset: 0;
@@ -22,6 +23,7 @@
         z-index: -1;
     }
 
+    /* CARD TO – ĐỤC – GLOW */
     .card {
         position: absolute;
         top: 50%;
@@ -29,7 +31,7 @@
         transform: translate(-50%, -45%);
         width: 500px;
         max-width: 92vw;
-        background: rgba(0, 0, 0, 0.88);
+        background: rgba(0, 0, 0, 0.88);   /* ĐỤC TỐI RÕ */
         padding: 45px 35px;
         border-radius: 35px;
         text-align: center;
@@ -42,6 +44,7 @@
         backdrop-filter: blur(5px);
     }
 
+    /* LOGO */
     .logo {
         width: 160px;
         height: 160px;
@@ -55,6 +58,7 @@
             0 0 85px rgba(0, 255, 255, 0.6);
     }
 
+    /* TIÊU ĐỀ – NEON XANH CYAN */
     .title {
         font-size: 42px;
         font-weight: 900;
@@ -69,14 +73,18 @@
             0 0 28px rgba(0, 255, 255, 0.5);
     }
 
+    /* CHỮ HƯỚNG DẪN – IN ĐẬM + RÕ */
     .sub {
         font-size: 19px;
         font-weight: 600;
         color: #e6e6e6;
         margin-bottom: 40px;
-        text-shadow: 0 0 4px rgba(255, 255, 255, 0.25);
+
+        text-shadow:
+            0 0 4px rgba(255, 255, 255, 0.25);
     }
 
+    /* NÚT GET KEY – TO – DÀI – GLOW XANH */
     .btn {
         width: 85%;
         max-width: 380px;
@@ -84,6 +92,7 @@
         background: #0b0b0b;
         border: 2px solid #00eaff;
         border-radius: 16px;
+
         font-size: 25px;
         font-weight: bold;
         color: white;
@@ -105,14 +114,7 @@
             0 0 110px #00eaff;
     }
 
-    #keyBox {
-        font-size: 22px;
-        color: #00eaff;
-        margin-top: 25px;
-        display: none;
-        word-wrap: break-word;
-    }
-
+    /* ICON TRONG CARD – TO – CÁCH XA NHAU */
     .icons {
         display: flex;
         justify-content: center;
@@ -135,19 +137,23 @@
 </head>
 <body>
 
+<!-- NỀN SAO BAY -->
 <canvas id="universe"></canvas>
 
+<!-- KHUNG CARD -->
 <div class="card">
 
     <div class="logo"></div>
 
     <div class="title">Cozy Hub</div>
 
-    <div class="sub">Bấm nút bên dưới để làm nhiệm vụ và nhận Key.</div>
+    <div class="sub">
+        Bấm nút bên dưới để làm nhiệm vụ và nhận Key.
+    </div>
 
-    <button class="btn" onclick="generateKey()">Get Key</button>
-
-    <div id="keyBox"></div>
+    <button class="btn" onclick="window.location.href='https://link4m.com/uAz8UdV'">
+        Get Key
+    </button>
 
     <div class="icons">
         <a href="https://www.youtube.com/@VoAo-v2g" target="_blank">
@@ -161,84 +167,7 @@
 
 </div>
 
-<!-- 🔥 FIREBASE KEY SYSTEM (DELTA A) -->
-<script>
-const firebaseURL = "https://cozyhubkey-default-rtdb.asia-southeast1.firebasedatabase.app";
-
-function randomKey(len) {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let k = "";
-    for (let i = 0; i < len; i++) k += chars[Math.floor(Math.random() * chars.length)];
-    return k;
-}
-
-async function generateKey() {
-    const keyBox = document.getElementById("keyBox");
-    keyBox.style.display = "block";
-    keyBox.innerHTML = "Đang xử lý...";
-
-    const now = Date.now();
-
-    // 1️⃣ Lấy IP thật
-    let ip = await fetch("https://api.ipify.org?format=json")
-        .then(r => r.json())
-        .then(d => d.ip.replace(/\./g, "_"))
-        .catch(() => "0_0_0_0");
-
-    // 2️⃣ Kiểm tra key cũ của IP
-    let ipData = await fetch(`${firebaseURL}/ips/${ip}.json`)
-        .then(r => r.json())
-        .catch(() => null);
-
-    if (ipData && ipData.key) {
-        let keyInfo = await fetch(`${firebaseURL}/keys/${ipData.key}.json`)
-            .then(r => r.json())
-            .catch(() => null);
-
-        if (keyInfo && keyInfo.expire > now && keyInfo.used === false) {
-            keyBox.innerHTML = `
-                <b>KEY của bạn (còn hạn & chưa dùng):</b><br><br>
-                <span style="font-size:26px">${ipData.key}</span><br><br>
-                Thời gian còn lại: ${(keyInfo.expire - now) / 3600000 | 0} giờ
-            `;
-            return;
-        }
-    }
-
-    // 3️⃣ Tạo key mới
-    const newKey = randomKey(40);
-    const expire = now + 86400000;
-
-    const data = {
-        key: newKey,
-        ip: ip,
-        expire: expire,
-        used: false
-    };
-
-    // Ghi vào /keys
-    await fetch(`${firebaseURL}/keys/${newKey}.json`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-    });
-
-    // Ghi vào /ips
-    await fetch(`${firebaseURL}/ips/${ip}.json`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: newKey, expire: expire })
-    });
-
-    keyBox.innerHTML = `
-        <b>KEY mới của bạn:</b><br><br>
-        <span style="font-size:26px">${newKey}</span><br><br>
-        Hạn sử dụng: 24h (1 lần dùng)
-    `;
-}
-</script>
-
-<!-- ⭐ Animation nền sao giữ nguyên -->
+<!-- SCRIPT NỀN VŨ TRỤ -->
 <script>
 const canvas = document.getElementById('universe');
 const ctx = canvas.getContext('2d');
@@ -267,10 +196,11 @@ function animate() {
     ctx.fillStyle = "white";
 
     for (let s of stars) {
-        s.y += s.z * 0.7;
+        let speed = s.z * 0.7;
+
+        s.y += speed;
         if (s.y > h) {
-            s.y = 0;
-            s.x = Math.random() * w;
+            s.y = 0; s.x = Math.random() * w;
         }
 
         ctx.beginPath();
