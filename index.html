@@ -5,25 +5,71 @@
 <title>CozyHub</title>
 
 <style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
     body {
         margin: 0;
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
         background: #050811;
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        color: white;
+        color: #ffffff;
+        overflow: hidden;
+        position: relative;
+    }
+
+    /* Background động kiểu neon cozy */
+    body::before {
+        content: "";
+        position: absolute;
+        inset: -40%;
+        background:
+            radial-gradient(circle at 10% 0%, rgba(0,255,255,0.20), transparent 55%),
+            radial-gradient(circle at 90% 100%, rgba(0,150,255,0.18), transparent 55%),
+            radial-gradient(circle at 50% 50%, rgba(0,255,150,0.06), transparent 60%);
+        filter: blur(2px);
+        animation: bgMove 16s infinite alternate ease-in-out;
+        z-index: -2;
+    }
+
+    body::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top, #151b2b 0, #050811 55%, #02040a 100%);
+        mix-blend-mode: normal;
+        z-index: -1;
+    }
+
+    @keyframes bgMove {
+        0% {
+            transform: translate3d(0,0,0) scale(1);
+        }
+        50% {
+            transform: translate3d(-4%,3%,0) scale(1.05);
+        }
+        100% {
+            transform: translate3d(4%,-3%,0) scale(1.08);
+        }
     }
 
     .card {
         width: 350px;
-        background: rgba(10, 15, 25, 0.85);
-        padding: 30px 25px;
+        max-width: 92vw;
+        background: rgba(7, 11, 20, 0.90);
+        padding: 30px 25px 24px;
         border-radius: 24px;
         text-align: center;
         border: 1px solid rgba(0,255,255,0.25);
-        box-shadow: 0 0 40px rgba(0,255,255,0.25);
+        box-shadow:
+            0 0 40px rgba(0,255,255,0.25),
+            0 0 90px rgba(0,255,255,0.08);
     }
 
     .logo {
@@ -31,8 +77,11 @@
         height: 110px;
         margin: 0 auto 10px;
         border-radius: 50%;
-        background: url('https://raw.githubusercontent.com/aovo4504-bit/Cozyhub/refs/heads/main/IMG_0830.png') center/cover;
-        filter: drop-shadow(0 0 15px #00eaff);
+        background: url('https://raw.githubusercontent.com/aovo4504-bit/Cozyhub/refs/heads/main/IMG_0830.png')
+            center/cover;
+        box-shadow:
+            0 0 18px #00eaff,
+            0 0 40px rgba(0,255,255,0.7);
     }
 
     .title {
@@ -40,13 +89,16 @@
         margin-bottom: 10px;
         color: #00eaff;
         font-weight: 600;
-        text-shadow: 0 0 12px rgba(0,255,255,0.6);
+        letter-spacing: 0.5px;
+        text-shadow:
+            0 0 10px rgba(0,255,255,0.6),
+            0 0 18px rgba(0,255,255,0.35);
     }
 
     .sub {
         font-size: 14px;
-        opacity: 0.8;
-        margin-bottom: 20px;
+        opacity: 0.85;
+        margin-bottom: 22px;
     }
 
     .btn {
@@ -59,13 +111,18 @@
         cursor: pointer;
         font-size: 16px;
         font-weight: 600;
-        box-shadow: 0 0 18px rgba(0,255,255,0.55);
+        box-shadow: 0 0 24px rgba(0,255,255,0.55);
         transition: 0.25s;
     }
 
     .btn:hover {
-        transform: scale(1.03);
-        box-shadow: 0 0 25px rgba(0,255,255,0.8);
+        transform: translateY(-1px) scale(1.03);
+        box-shadow: 0 0 30px rgba(0,255,255,0.9);
+    }
+
+    .btn:active {
+        transform: scale(0.97);
+        box-shadow: 0 0 14px rgba(0,255,255,0.7);
     }
 
     /* ==== ICON GROUP ==== */
@@ -95,9 +152,9 @@
 
         animation: ultraBreath 3s infinite ease-in-out;
         transition: 0.25s;
+        transform-origin: center;
     }
 
-    /* Hover VIP ULTRA */
     .icons img:hover {
         transform: scale(1.25) rotate(2deg);
 
@@ -109,7 +166,6 @@
         animation: ultraShake 0.28s ease, shineEffect 0.8s ease-out;
     }
 
-    /* Aura xoay */
     .icons a::before {
         content: "";
         position: absolute;
@@ -173,9 +229,17 @@
                 drop-shadow(0 0 10px rgba(0,255,255,0.5));
         }
     }
+
+    @media (max-width: 480px) {
+        .card {
+            padding: 24px 18px 20px;
+            width: 320px;
+        }
+        .title { font-size: 26px; }
+        .logo { width: 90px; height: 90px; }
+    }
 </style>
 </head>
-
 
 <body>
 
@@ -183,43 +247,86 @@
 
     <div class="logo"></div>
 
-    <div class="title">Cozy Hub</div>
+    <div class="title" id="titleText">Cozy Hub</div>
 
     <div class="sub" id="subText">
         Bấm nút bên dưới để làm nhiệm vụ và nhận Key.
     </div>
 
-    <button class="btn" onclick="startFlow()">
+    <button class="btn" onclick="startFlow()" id="btnText">
         Get Key
     </button>
 
     <div class="icons">
         <a href="https://www.youtube.com/@VoAo-v2g" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
         </a>
 
         <a href="https://www.tiktok.com/@cozyhub15" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
+            <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok">
         </a>
 
         <a href="https://discord.gg/YOUR_INVITE" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png">
+            <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="Discord">
         </a>
     </div>
 
 </div>
 
 <script>
-// ===============================
-// CONFIG
-// ===============================
+/* ====== AUTODETECT LANGUAGE ====== */
+let rawLang = (navigator.language || "en").toLowerCase();
+let LANG;
+if (rawLang.startsWith("vi")) LANG = "vi";
+else if (rawLang.startsWith("th")) LANG = "th";
+else if (rawLang.startsWith("id")) LANG = "id";
+else if (rawLang.startsWith("fil") || rawLang.startsWith("ph") || rawLang.startsWith("tl")) LANG = "ph";
+else LANG = "en";
+
+const TEXT = {
+    title: {
+        vi: "Cozy Hub",
+        en: "Cozy Hub",
+        th: "Cozy Hub",
+        id: "Cozy Hub",
+        ph: "Cozy Hub"
+    },
+    btn: {
+        vi: "Nhận Key",
+        en: "Get Key",
+        th: "รับคีย์",
+        id: "Dapatkan Key",
+        ph: "Kunin ang Key"
+    },
+    sub_start: {
+        vi: "Bấm nút bên dưới để làm nhiệm vụ 1 và nhận Key.",
+        en: "Press the button below to do mission 1 and get your key.",
+        th: "กดปุ่มด้านล่างเพื่อทำภารกิจที่ 1 และรับคีย์ของคุณ",
+        id: "Tekan tombol di bawah untuk menjalankan misi 1 dan mendapatkan key.",
+        ph: "Pindutin ang button sa ibaba para gawin ang mission 1 at makuha ang key."
+    },
+    sub_after1: {
+        vi: "Bạn đã hoàn thành nhiệm vụ 1 – tiếp tục nhiệm vụ 2.",
+        en: "You completed mission 1 – continue with mission 2.",
+        th: "คุณทำภารกิจที่ 1 เสร็จแล้ว – ไปต่อภารกิจที่ 2",
+        id: "Anda telah menyelesaikan misi 1 – lanjut ke misi 2.",
+        ph: "Natapos mo na ang mission 1 – magpatuloy sa mission 2."
+    },
+    sub_done: {
+        vi: "Bạn đã hoàn thành tất cả nhiệm vụ – bấm để nhận Key.",
+        en: "You completed all missions – press to get your key.",
+        th: "คุณทำภารกิจทั้งหมดเสร็จแล้ว – กดเพื่อรับคีย์",
+        id: "Anda telah menyelesaikan semua misi – tekan untuk mendapatkan key.",
+        ph: "Tapos mo na lahat ng missions – pindutin para makuha ang key."
+    }
+};
+
+/* ====== CONFIG LINK NHIỆM VỤ ====== */
 const LINK_TASK1 = "https://link4m.com/uAz8UdV";  
 const LINK_TASK2 = "https://linkvertise.com/1457968/xB7L2G1JCt6E?o=sharing";
 const RESET_HOURS = 24;
 
-// ===============================
-// RESET 24H
-// ===============================
+/* ====== RESET SAU 24H ====== */
 (function checkReset24h() {
     const lastDone = localStorage.getItem("cozy_task_done_at");
     if (lastDone) {
@@ -232,32 +339,39 @@ const RESET_HOURS = 24;
     }
 })();
 
-// ===============================
-// FLOW
-// ===============================
+/* ====== FLOW ====== */
 function startFlow() {
     const t1 = localStorage.getItem("cozy_task1");
     const t2 = localStorage.getItem("cozy_task2");
 
-    if (!t1) window.location.href = LINK_TASK1;
-    else if (t1 === "done" && !t2) window.location.href = LINK_TASK2;
-    else window.location.href = "getkey.html";
+    if (!t1) {
+        // chưa làm nhiệm vụ 1
+        window.location.href = LINK_TASK1;
+    } else if (t1 === "done" && !t2) {
+        // đã làm nv1, chưa nv2
+        window.location.href = LINK_TASK2;
+    } else {
+        // xong hết → sang getkey
+        window.location.href = "getkey.html";
+    }
 }
 
-// ===============================
-// UI update
-// ===============================
+/* ====== UPDATE UI THEO TRẠNG THÁI NHIỆM VỤ ====== */
 window.onload = () => {
     const t1 = localStorage.getItem("cozy_task1");
     const t2 = localStorage.getItem("cozy_task2");
+
+    document.getElementById("titleText").textContent = TEXT.title[LANG];
+    document.getElementById("btnText").textContent   = TEXT.btn[LANG];
+
     const sub = document.getElementById("subText");
 
-    if (!t1)
-        sub.textContent = "Bấm để làm nhiệm vụ 1 trước khi nhận key.";
-    else if (t1 && !t2)
-        sub.textContent = "Bạn đã hoàn thành nhiệm vụ 1 – tiếp tục nhiệm vụ 2.";
-    else {
-        sub.textContent = "Bạn đã hoàn thành tất cả nhiệm vụ – bấm để nhận Key.";
+    if (!t1) {
+        sub.textContent = TEXT.sub_start[LANG];
+    } else if (t1 && !t2) {
+        sub.textContent = TEXT.sub_after1[LANG];
+    } else {
+        sub.textContent = TEXT.sub_done[LANG];
         if (!localStorage.getItem("cozy_task_done_at")) {
             localStorage.setItem("cozy_task_done_at", Date.now());
         }
