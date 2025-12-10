@@ -20,7 +20,7 @@
         color: white;
     }
 
-    /* ===== FLOATING PARTICLES BACKGROUND ===== */
+    /* ===== FLOATING PARTICLES (BRIGHT VERSION) ===== */
     #particles {
         position: absolute;
         width: 100%;
@@ -31,31 +31,30 @@
 
     .particle {
         position: absolute;
-        width: 6px;
-        height: 6px;
-        background: rgba(0,255,255,0.9);
+        width: 10px;
+        height: 10px;
+        background: rgba(0,255,255,1);
         border-radius: 50%;
-        filter: blur(1px);
+        filter: blur(0.5px);
         animation: floatUp linear infinite;
-        opacity: 0.7;
+        opacity: 0.85;
     }
 
     @keyframes floatUp {
-        0% { transform: translateY(110vh) scale(0.4); opacity: 0.1; }
-        30% { opacity: 0.8; }
-        100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        0% { transform: translateY(120vh) scale(0.6); opacity: 0.4; }
+        40% { opacity: 1; }
+        100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
     }
 
     .card {
         width: 350px;
         max-width: 92vw;
-        background: rgba(7,11,20,0.9);
-        padding: 32px 26px 26px;
+        background: rgba(7,11,20,0.93);
+        padding: 34px 28px 26px;
         border-radius: 24px;
         text-align: center;
         border: 1px solid rgba(0,255,255,0.25);
-        box-shadow: 0 0 38px rgba(0,255,255,0.25);
-        backdrop-filter: blur(4px);
+        box-shadow: 0 0 58px rgba(0,255,255,0.25);
         z-index: 5;
     }
 
@@ -72,13 +71,13 @@
         font-size: 30px;
         color: #00eaff;
         font-weight: 600;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
         text-shadow: 0 0 14px rgba(0,255,255,0.6);
     }
 
     .sub {
-        font-size: 14px;
-        opacity: .85;
+        font-size: 15px;
+        opacity: .9;
         margin-bottom: 22px;
         min-height: 40px;
     }
@@ -93,13 +92,13 @@
         cursor: pointer;
         font-size: 16px;
         font-weight: 600;
-        box-shadow: 0 0 22px rgba(0,255,255,0.55);
+        box-shadow: 0 0 28px rgba(0,255,255,0.55);
         transition: 0.25s;
     }
 
     .btn:hover {
         transform: scale(1.03);
-        box-shadow: 0 0 32px rgba(0,255,255,0.8);
+        box-shadow: 0 0 38px rgba(0,255,255,0.8);
     }
 
     /* ===== ICON VIP ULTRA ===== */
@@ -110,19 +109,13 @@
         gap: 22px;
     }
 
-    .icons a {
-        position: relative;
-        display: inline-block;
-    }
-
     .icons img {
         width: 46px;
         height: 46px;
         cursor: pointer;
         filter:
-            drop-shadow(0 0 10px rgba(0,255,255,0.6))
-            drop-shadow(0 0 20px rgba(0,180,255,0.45))
-            drop-shadow(0 0 35px rgba(0,120,255,0.35));
+            drop-shadow(0 0 12px rgba(0,255,255,0.9))
+            drop-shadow(0 0 26px rgba(0,180,255,0.8));
         animation: ultraBreath 3s ease-in-out infinite;
         transition: 0.25s;
     }
@@ -130,10 +123,9 @@
     .icons img:hover {
         transform: scale(1.25) rotate(2deg);
         filter:
-            drop-shadow(0 0 16px rgba(0,255,255,1))
-            drop-shadow(0 0 38px rgba(0,180,255,0.9))
-            drop-shadow(0 0 58px rgba(0,120,255,0.8));
-        animation: ultraShake 0.28s ease, shineEffect 0.8s ease-out;
+            drop-shadow(0 0 20px rgba(0,255,255,1))
+            drop-shadow(0 0 45px rgba(0,180,255,1));
+        animation: ultraShake 0.28s ease;
     }
 
     @keyframes ultraBreath {
@@ -143,14 +135,9 @@
     }
 
     @keyframes ultraShake {
-        0% { transform: scale(1.15) rotate(0deg); }
+        0% { transform: scale(1.10) rotate(0deg); }
         50% { transform: scale(1.25) rotate(2deg); }
-        100% { transform: scale(1.20) rotate(0deg); }
-    }
-
-    @keyframes shineEffect {
-        0% { filter: brightness(1.6); }
-        100% { filter: brightness(1); }
+        100% { transform: scale(1.15) rotate(0deg); }
     }
 </style>
 </head>
@@ -163,12 +150,9 @@
 
     <div class="logo"></div>
 
-    <!-- KHÔNG DỊCH -->
     <div class="title">Cozy Hub</div>
 
-    <div class="sub" id="subText">
-        ...
-    </div>
+    <div class="sub" id="subText">Loading...</div>
 
     <button class="btn" onclick="startFlow()" id="btnText">
         Get Key
@@ -178,11 +162,9 @@
         <a href="https://www.youtube.com/@VoAo-v2g" target="_blank">
             <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
         </a>
-
         <a href="https://www.tiktok.com/@cozyhub15" target="_blank">
             <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
         </a>
-
         <a href="https://discord.gg/YOUR_INVITE" target="_blank">
             <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png">
         </a>
@@ -191,73 +173,67 @@
 </div>
 
 <script>
-/* ===== BACKGROUND PARTICLES GENERATOR ===== */
-const container = document.getElementById("particles");
+/* ========== PARTICLES ========== */
+const box = document.getElementById("particles");
 
-function createParticle() {
+function spawnParticle() {
     const p = document.createElement("div");
     p.classList.add("particle");
-
     p.style.left = Math.random() * 100 + "vw";
-    p.style.animationDuration = 6 + Math.random() * 8 + "s";
-
-    container.appendChild(p);
-
-    setTimeout(() => p.remove(), 15000);
+    p.style.animationDuration = (5 + Math.random() * 6) + "s";
+    box.appendChild(p);
+    setTimeout(() => p.remove(), 11000);
 }
+setInterval(spawnParticle, 120);
 
-setInterval(createParticle, 180);
 
-/* ===== NGÔN NGỮ ===== */
+/* ========== LANGUAGE SYSTEM (DEFAULT ENGLISH) ========== */
 let rawLang = (navigator.language || "en").toLowerCase();
+
 let LANG =
     rawLang.startsWith("vi") ? "vi" :
     rawLang.startsWith("th") ? "th" :
     rawLang.startsWith("id") ? "id" :
-    (rawLang.startsWith("ph") || rawLang.startsWith("fil") || rawLang.startsWith("tl")) ? "ph" :
-    "en";
+    rawLang.startsWith("ph") || rawLang.startsWith("fil") || rawLang.startsWith("tl") ? "ph" :
+    "en";   // DEFAULT = ENGLISH
 
 const TEXT = {
     btn: {
-        vi:"Nhận Key",
         en:"Get Key",
+        vi:"Nhận Key",
         th:"รับคีย์",
         id:"Dapatkan Key",
         ph:"Kunin ang Key"
     },
     sub_start:{
-        vi:"Bấm nút bên dưới để làm nhiệm vụ 1 và nhận key.",
         en:"Press the button below to start mission 1.",
+        vi:"Bấm nút bên dưới để làm nhiệm vụ 1 và nhận key.",
         th:"กดปุ่มด้านล่างเพื่อเริ่มภารกิจ 1",
         id:"Tekan tombol di bawah untuk memulai misi 1.",
         ph:"Pindutin ang button para simulan ang mission 1."
     },
     sub_after1:{
-        vi:"Bạn đã hoàn thành nhiệm vụ 1 – tiếp tục nhiệm vụ 2.",
         en:"Mission 1 complete – continue to mission 2.",
+        vi:"Bạn đã hoàn thành nhiệm vụ 1 – tiếp tục nhiệm vụ 2.",
         th:"ภารกิจ 1 เสร็จแล้ว – ไปต่อภารกิจ 2",
         id:"Misi 1 selesai – lanjutkan ke misi 2.",
         ph:"Tapos na ang mission 1 – magpatuloy sa mission 2."
     },
     sub_done:{
-        vi:"Bạn đã hoàn thành tất cả nhiệm vụ – bấm để nhận Key.",
         en:"All missions complete – press to get your key.",
+        vi:"Bạn đã hoàn thành tất cả nhiệm vụ – bấm để nhận Key.",
         th:"ทำภารกิจครบแล้ว – กดเพื่อรับคีย์",
         id:"Semua misi selesai – tekan untuk mendapatkan key.",
         ph:"Tapos mo na lahat – pindutin para kunin ang key."
     }
 };
 
-/* =============================== */
-/*        RESET 24H TIMER          */
-/* =============================== */
-const RESET_HOURS = 24;
-
+/* ========== RESET 24H ========== */
 (function resetCheck(){
     const last = localStorage.getItem("cozy_task_done_at");
     if(last){
         const diff = Date.now() - Number(last);
-        if(diff >= RESET_HOURS*60*60*1000){
+        if(diff >= 24*60*60*1000){
             localStorage.removeItem("cozy_task1");
             localStorage.removeItem("cozy_task2");
             localStorage.removeItem("cozy_task_done_at");
@@ -265,9 +241,7 @@ const RESET_HOURS = 24;
     }
 })();
 
-/* =============================== */
-/*          AUTO FLOW              */
-/* =============================== */
+/* ========== FLOW ========== */
 const LINK_TASK1 = "https://link4m.com/uAz8UdV";
 const LINK_TASK2 = "https://linkvertise.com/1457968/xB7L2G1JCt6E?o=sharing";
 
@@ -280,20 +254,20 @@ function startFlow(){
     else window.location.href = "getkey.html";
 }
 
-/* =============================== */
-/*         UPDATE HOME UI          */
-/* =============================== */
+/* ========== UPDATE TEXT ========== */
 window.onload = () => {
-    document.getElementById("btnText").textContent = TEXT.btn[LANG];
-
     const t1 = localStorage.getItem("cozy_task1");
     const t2 = localStorage.getItem("cozy_task2");
 
+    btnText.textContent = TEXT.btn[LANG];
+
     if (!t1){
         subText.textContent = TEXT.sub_start[LANG];
-    } else if (t1 && !t2){
+    } 
+    else if (t1 && !t2){
         subText.textContent = TEXT.sub_after1[LANG];
-    } else {
+    } 
+    else {
         subText.textContent = TEXT.sub_done[LANG];
         if(!localStorage.getItem("cozy_task_done_at")){
             localStorage.setItem("cozy_task_done_at", Date.now());
