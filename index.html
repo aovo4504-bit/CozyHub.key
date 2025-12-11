@@ -1,287 +1,461 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>CozyHub</title>
 
 <style>
-    *{margin:0;padding:0;box-sizing:border-box}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    body {
-        margin: 0;
-        font-family: 'Poppins', sans-serif;
-        height: 100vh;
-        background: #050811;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-        position: relative;
-        color: white;
-    }
+body {
+  margin: 0;
+  font-family: "Poppins", system-ui, sans-serif;
+  height: 100vh;
+  background: radial-gradient(circle at top, #1b2740 0, #050814 45%, #02030a 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  color: #ffffff;
+}
 
-    /* ===== FLOATING PARTICLES ===== */
-    #particles {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        z-index: -2;
-        overflow: hidden;
-    }
+/* BG glow */
+body::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(0, 255, 255, 0.15), transparent 55%),
+    radial-gradient(circle at 90% 100%, rgba(0, 140, 255, 0.18), transparent 55%);
+  opacity: 0.9;
+  filter: blur(1px);
+  animation: bgMove 18s ease-in-out infinite alternate;
+  z-index: -2;
+}
 
-    .particle {
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        background: rgba(0,255,255,1);
-        border-radius: 50%;
-        filter: blur(0.5px);
-        animation: floatUp linear infinite;
-        opacity: 0.85;
-    }
+@keyframes bgMove {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-4%, 3%, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(3%, -3%, 0) scale(1.07);
+  }
+}
 
-    @keyframes floatUp {
-        0% { transform: translateY(120vh) scale(0.6); opacity: 0.3; }
-        40% { opacity: 1; }
-        100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
-    }
+/* particles */
+#particles {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
 
-    .card {
-        width: 380px;
-        max-width: 92vw;
-        background: rgba(7,11,20,0.92);
-        padding: 34px 32px 32px;
-        border-radius: 26px;
-        text-align: center;
-        border: 1px solid rgba(0,255,255,0.25);
-        box-shadow: 0 0 65px rgba(0,255,255,0.25);
-        z-index: 5;
-    }
+.particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(0, 255, 255, 0.95);
+  border-radius: 50%;
+  filter: blur(0.5px);
+  animation: floatUp linear infinite;
+  opacity: 0.8;
+}
 
-    .logo {
-        width: 110px;
-        height: 110px;
-        margin: 0 auto 12px;
-        border-radius: 50%;
-        background: url("https://raw.githubusercontent.com/aovo4504-bit/Cozyhub/refs/heads/main/IMG_0830.png") center/cover;
-        box-shadow: 0 0 18px #00eaff, 0 0 38px rgba(0,255,255,0.55);
-    }
+@keyframes floatUp {
+  0% {
+    transform: translateY(120vh) scale(0.6);
+    opacity: 0.3;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-10vh) scale(1.1);
+    opacity: 0;
+  }
+}
 
-    .title {
-        font-size: 32px;
-        color: #00eaff;
-        font-weight: 600;
-        margin-bottom: 10px;
-        text-shadow: 0 0 14px rgba(0,255,255,0.6);
-    }
+/* CARD */
+.card {
+  width: 390px;
+  max-width: 94vw;
+  background:
+    radial-gradient(circle at top, rgba(0, 255, 255, 0.12), transparent 40%),
+    rgba(5, 10, 22, 0.96);
+  padding: 32px 30px 26px;
+  border-radius: 26px;
+  text-align: center;
+  border: 1px solid rgba(0, 255, 255, 0.32);
+  box-shadow:
+    0 0 40px rgba(0, 255, 255, 0.3),
+    0 0 80px rgba(0, 255, 255, 0.18);
+  position: relative;
+}
 
-    .sub {
-        font-size: 15px;
-        opacity: .9;
-        margin-bottom: 22px;
-        min-height: 40px;
-    }
+/* glow vòng tròn */
+.card::before {
+  content: "";
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  width: 220px;
+  height: 220px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(0, 255, 255, 0.55), transparent 70%);
+  opacity: 0.55;
+  filter: blur(18px);
+  z-index: -1;
+}
 
-    .btn {
-        width: 100%;
-        padding: 12px 0;
-        border: none;
-        border-radius: 12px;
-        background: #00eaff;
-        color: #001015;
-        cursor: pointer;
-        font-size: 17px;
-        font-weight: 600;
-        box-shadow: 0 0 28px rgba(0,255,255,0.55);
-        transition: 0.25s;
-    }
+.logo {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 10px;
+  border-radius: 50%;
+  background: url("https://raw.githubusercontent.com/aovo4504-bit/Cozyhub/refs/heads/main/IMG_0830.png")
+    center/cover;
+  box-shadow:
+    0 0 16px rgba(0, 255, 255, 0.9),
+    0 0 36px rgba(0, 255, 255, 0.75);
+}
 
-    .btn:hover {
-        transform: scale(1.03);
-        box-shadow: 0 0 38px rgba(0,255,255,0.8);
-    }
+.title {
+  font-size: 30px;
+  color: #e9fcff;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+  text-shadow:
+    0 0 16px rgba(0, 255, 255, 0.8),
+    0 0 30px rgba(0, 255, 255, 0.4);
+}
 
-    /* ICON VIP ULTRA */
-    .icons {
-        margin-top: 22px;
-        display: flex;
-        justify-content: center;
-        gap: 28px;
-    }
+/* badge nhỏ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(0, 255, 255, 0.4);
+  margin-bottom: 12px;
+  opacity: 0.9;
+}
+.badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00ff9d;
+  box-shadow: 0 0 10px rgba(0, 255, 157, 0.9);
+}
+.badge-text {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  font-size: 10px;
+  color: #bffcff;
+}
 
-    .icons img {
-        width: 48px;
-        height: 48px;
-        cursor: pointer;
+.sub {
+  font-size: 14px;
+  opacity: 0.9;
+  margin-bottom: 22px;
+  min-height: 38px;
+}
 
-        filter:
-            drop-shadow(0 0 12px rgba(0,255,255,0.95))
-            drop-shadow(0 0 26px rgba(0,180,255,0.85));
+.btn {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #00eaff, #00ffa3);
+  color: #001015;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 600;
+  box-shadow:
+    0 0 26px rgba(0, 255, 255, 0.7),
+    0 0 40px rgba(0, 255, 163, 0.5);
+  transition: 0.22s;
+}
 
-        animation: ultraBreath 3s ease-in-out infinite;
-        transition: 0.25s;
-    }
+.btn:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow:
+    0 0 32px rgba(0, 255, 255, 0.9),
+    0 0 48px rgba(0, 255, 163, 0.7);
+}
 
-    .icons img:hover {
-        transform: scale(1.25);
-        filter:
-            drop-shadow(0 0 20px rgba(0,255,255,1))
-            drop-shadow(0 0 45px rgba(0,180,255,1));
-        animation: ultraShake 0.28s ease;
-    }
+.btn:active {
+  transform: scale(0.97);
+  box-shadow:
+    0 0 18px rgba(0, 255, 255, 0.7),
+    0 0 30px rgba(0, 255, 163, 0.5);
+}
 
-    @keyframes ultraBreath {
-        0% { filter: drop-shadow(0 0 6px cyan); }
-        50% { filter: drop-shadow(0 0 18px cyan); }
-        100% { filter: drop-shadow(0 0 6px cyan); }
-    }
+.progress-text {
+  margin-top: 8px;
+  font-size: 12px;
+  opacity: 0.75;
+}
 
-    @keyframes ultraShake {
-        0% { transform: scale(1.10); }
-        50% { transform: scale(1.25); }
-        100% { transform: scale(1.15); }
-    }
+/* ICONS */
+.icons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+}
+
+.icons img {
+  width: 46px;
+  height: 46px;
+  cursor: pointer;
+  filter:
+    drop-shadow(0 0 12px rgba(0, 255, 255, 0.95))
+    drop-shadow(0 0 26px rgba(0, 180, 255, 0.85));
+  animation: ultraBreath 3s ease-in-out infinite;
+  transition: 0.25s;
+}
+
+.icons img:hover {
+  transform: scale(1.25);
+  filter:
+    drop-shadow(0 0 22px rgba(0, 255, 255, 1))
+    drop-shadow(0 0 42px rgba(0, 180, 255, 1));
+  animation: ultraShake 0.28s ease;
+}
+
+@keyframes ultraBreath {
+  0% {
+    filter: drop-shadow(0 0 6px cyan);
+  }
+  50% {
+    filter: drop-shadow(0 0 18px cyan);
+  }
+  100% {
+    filter: drop-shadow(0 0 6px cyan);
+  }
+}
+
+@keyframes ultraShake {
+  0% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1.15);
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: 340px;
+    padding: 28px 22px 22px;
+  }
+  .title {
+    font-size: 26px;
+  }
+}
 </style>
 </head>
-
 <body>
-
 <div id="particles"></div>
 
 <div class="card">
+  <div class="logo"></div>
 
-    <div class="logo"></div>
+  <div class="title">Cozy Hub</div>
 
-    <div class="title">Cozy Hub</div>
+  <div class="badge">
+    <span class="badge-dot"></span>
+    <span class="badge-text" id="badgeText">PREMIUM KEY SYSTEM</span>
+  </div>
 
-    <div class="sub" id="subText">Loading...</div>
+  <div class="sub" id="subText">Loading...</div>
 
-    <button class="btn" onclick="startFlow()" id="btnText">
-        Get Key
-    </button>
+  <button class="btn" id="btnText" onclick="startFlow()">
+    Get Key
+  </button>
 
-    <div class="icons">
-        <a href="https://www.youtube.com/@VoAo-v2g" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
-        </a>
+  <div class="progress-text" id="progressText"></div>
 
-        <a href="https://www.tiktok.com/@cozyhub15" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
-        </a>
-
-        <a href="https://discord.gg/YOUR_INVITE" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png">
-        </a>
-    </div>
-
+  <div class="icons">
+    <a href="https://www.youtube.com/@VoAo-v2g" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" />
+    </a>
+    <a href="https://www.tiktok.com/@cozyhub15" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok" />
+    </a>
+    <a href="https://discord.gg/YOUR_INVITE" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="Discord" />
+    </a>
+  </div>
 </div>
 
 <script>
 /* ========== PARTICLES ========== */
-const box = document.getElementById("particles");
+const particlesBox = document.getElementById("particles");
 
 function spawnParticle() {
-    const p = document.createElement("div");
-    p.classList.add("particle");
-    p.style.left = Math.random() * 100 + "vw";
-    p.style.animationDuration = (5 + Math.random() * 7) + "s";
-    box.appendChild(p);
-    setTimeout(() => p.remove(), 12000);
+  const p = document.createElement("div");
+  p.classList.add("particle");
+  p.style.left = Math.random() * 100 + "vw";
+  p.style.animationDuration = 6 + Math.random() * 6 + "s";
+  particlesBox.appendChild(p);
+  setTimeout(() => p.remove(), 12000);
 }
 
 setInterval(spawnParticle, 140);
 
-
-/* ========== LANGUAGE SYSTEM (DEFAULT = ENGLISH) ========== */
+/* ========== LANGUAGE (DEFAULT ENGLISH) ========== */
 let rawLang = (navigator.language || "en").toLowerCase();
 
-/* VI = vẫn dùng tiếng Anh */
+/*
+  ALWAYS DEFAULT ENGLISH.
+  Only TH / ID / PH auto-switch.
+  Vietnamese (vi-VN) vẫn dùng English.
+*/
 let LANG =
-    rawLang.startsWith("th") ? "th" :
-    rawLang.startsWith("id") ? "id" :
-    rawLang.startsWith("ph") || rawLang.startsWith("fil") || rawLang.startsWith("tl") ? "ph" :
-    "en";  // ALWAYS DEFAULT ENGLISH
+  rawLang.startsWith("th") ? "th" :
+  rawLang.startsWith("id") ? "id" :
+  (rawLang.startsWith("ph") || rawLang.startsWith("fil") || rawLang.startsWith("tl"))
+    ? "ph"
+    : "en";
 
 const TEXT = {
-    btn: {
-        en:"Get Key",
-        vi:"Nhận Key",
-        th:"รับคีย์",
-        id:"Dapatkan Key",
-        ph:"Kunin ang Key"
-    },
-    sub_start:{
-        en:"Press the button below to start mission 1.",
-        vi:"Bấm nút bên dưới để làm nhiệm vụ 1 và nhận key.",
-        th:"กดปุ่มด้านล่างเพื่อเริ่มภารกิจ 1",
-        id:"Tekan tombol di bawah untuk memulai misi 1.",
-        ph:"Pindutin ang button para simulan ang mission 1."
-    },
-    sub_after1:{
-        en:"Mission 1 complete — continue to mission 2.",
-        vi:"Bạn đã hoàn thành nhiệm vụ 1 — tiếp tục nhiệm vụ 2.",
-        th:"ภารกิจ 1 เสร็จแล้ว — ไปต่อภารกิจ 2",
-        id:"Misi 1 selesai — lanjut ke misi 2.",
-        ph:"Tapos na ang mission 1 — magpatuloy sa mission 2."
-    },
-    sub_done:{
-        en:"All missions complete — press to get your key.",
-        vi:"Bạn đã hoàn thành tất cả nhiệm vụ — bấm để nhận key.",
-        th:"ทำภารกิจครบแล้ว — กดเพื่อรับคีย์",
-        id:"Semua misi selesai — tekan untuk mendapatkan key.",
-        ph:"Tapos na lahat — pindutin para kunin ang key."
-    }
+  badge: {
+    en: "PREMIUM KEY SYSTEM",
+    vi: "HỆ THỐNG KEY CAO CẤP",
+    th: "ระบบคีย์ระดับพรีเมียม",
+    id: "SISTEM KEY PREMIUM",
+    ph: "PREMIUM KEY SYSTEM"
+  },
+  btn: {
+    en: "Get Key",
+    vi: "Nhận Key",
+    th: "รับคีย์",
+    id: "Dapatkan Key",
+    ph: "Kunin ang Key"
+  },
+  sub_start: {
+    en: "Press the button below to start mission 1 and get your Cozy Hub key.",
+    vi: "Nhấn nút bên dưới để làm nhiệm vụ 1 và nhận key Cozy Hub.",
+    th: "กดปุ่มด้านล่างเพื่อเริ่มภารกิจที่ 1 และรับคีย์ Cozy Hub",
+    id: "Tekan tombol di bawah untuk memulai misi 1 dan mendapatkan key Cozy Hub.",
+    ph: "Pindutin ang button sa ibaba para simulan ang mission 1 at makuha ang Cozy Hub key."
+  },
+  sub_after1: {
+    en: "Mission 1 completed — continue with mission 2.",
+    vi: "Bạn đã hoàn thành nhiệm vụ 1 — tiếp tục nhiệm vụ 2.",
+    th: "คุณทำภารกิจที่ 1 เสร็จแล้ว — ไปต่อภารกิจที่ 2",
+    id: "Misi 1 selesai — lanjut ke misi 2.",
+    ph: "Tapos na ang mission 1 — magpatuloy sa mission 2."
+  },
+  sub_done: {
+    en: "All missions completed — press the button to get your key.",
+    vi: "Bạn đã hoàn thành tất cả nhiệm vụ — bấm nút để nhận key.",
+    th: "ทำภารกิจครบแล้ว — กดปุ่มเพื่อรับคีย์",
+    id: "Semua misi selesai — tekan tombol untuk mendapatkan key.",
+    ph: "Tapos mo na lahat ng missions — pindutin ang button para kunin ang key."
+  },
+  progress_0: {
+    en: "Progress: 0 / 2 missions.",
+    vi: "Tiến độ: 0 / 2 nhiệm vụ.",
+    th: "ความคืบหน้า: 0 / 2 ภารกิจ",
+    id: "Progres: 0 / 2 misi.",
+    ph: "Progress: 0 / 2 missions."
+  },
+  progress_1: {
+    en: "Progress: 1 / 2 missions.",
+    vi: "Tiến độ: 1 / 2 nhiệm vụ.",
+    th: "ความคืบหน้า: 1 / 2 ภารกิจ",
+    id: "Progres: 1 / 2 misi.",
+    ph: "Progress: 1 / 2 missions."
+  },
+  progress_2: {
+    en: "Progress: 2 / 2 missions.",
+    vi: "Tiến độ: 2 / 2 nhiệm vụ.",
+    th: "ความคืบหน้า: 2 / 2 ภารกิจ",
+    id: "Progres: 2 / 2 misi.",
+    ph: "Progress: 2 / 2 missions."
+  }
 };
-
 
 /* ========== RESET 24H ========== */
-(function resetCheck(){
-    const last = localStorage.getItem("cozy_task_done_at");
-    if(last){
-        if(Date.now() - Number(last) >= 86400000){
-            localStorage.clear();
-        }
+(function resetCheck() {
+  const last = localStorage.getItem("cozy_task_done_at");
+  if (last) {
+    const diff = Date.now() - Number(last);
+    if (diff >= 24 * 60 * 60 * 1000) {
+      localStorage.removeItem("cozy_task1");
+      localStorage.removeItem("cozy_task2");
+      localStorage.removeItem("cozy_task_done_at");
     }
+  }
 })();
 
+/* ========== LINKS NHIỆM VỤ ========== */
+const LINK_TASK1 = "https://direct-link.net/1457968/wqITOYXxDOMd";
+const LINK_TASK2 = "https://link-target.net/1457968/nP7uWHQKwUUq";
+const GETKEY_URL = "https://aovo4504-bit.github.io/Cozyhub/getkey.html";
 
-/* ========== FLOW ========== */
-const LINK_TASK1 = "https://direct-link.net/1457968/wqITOYXxDOMd
-";
-const LINK_TASK2 = "https://link-target.net/1457968/nP7uWHQKwUUq-";
+/* ========== FLOW NHIỆM VỤ ========== */
+function startFlow() {
+  const t1 = localStorage.getItem("cozy_task1");
+  const t2 = localStorage.getItem("cozy_task2");
 
-function startFlow(){
-    const t1 = localStorage.getItem("cozy_task1");
-    const t2 = localStorage.getItem("cozy_task2");
-
-    if(!t1) return window.location.href = LINK_TASK1;
-    if(t1==="done" && !t2) return window.location.href = LINK_TASK2;
-
-    return window.location.href = "getkey.html";
+  if (!t1) {
+    // chưa làm nhiệm vụ 1
+    window.location.href = LINK_TASK1;
+  } else if (t1 === "done" && !t2) {
+    // đã làm nv1, chưa làm nv2
+    window.location.href = LINK_TASK2;
+  } else {
+    // đã xong 2 nhiệm vụ
+    window.location.href = GETKEY_URL;
+  }
 }
 
+/* ========== UPDATE UI KHI LOAD ========== */
+window.addEventListener("load", () => {
+  const t1 = localStorage.getItem("cozy_task1");
+  const t2 = localStorage.getItem("cozy_task2");
 
-/* ========== UPDATE TEXT ========== */
-window.onload = () => {
-    const t1 = localStorage.getItem("cozy_task1");
-    const t2 = localStorage.getItem("cozy_task2");
+  const btnEl = document.getElementById("btnText");
+  const badgeEl = document.getElementById("badgeText");
+  const subEl = document.getElementById("subText");
+  const progEl = document.getElementById("progressText");
 
-    btnText.textContent = TEXT.btn[LANG];
+  btnEl.textContent = TEXT.btn[LANG];
+  badgeEl.textContent = TEXT.badge[LANG];
 
-    if (!t1){
-        subText.textContent = TEXT.sub_start[LANG];
-    } 
-    else if (t1 && !t2){
-        subText.textContent = TEXT.sub_after1[LANG];
-    } 
-    else {
-        subText.textContent = TEXT.sub_done[LANG];
-        if(!localStorage.getItem("cozy_task_done_at")){
-            localStorage.setItem("cozy_task_done_at", Date.now());
-        }
+  if (!t1) {
+    subEl.textContent = TEXT.sub_start[LANG];
+    progEl.textContent = TEXT.progress_0[LANG];
+  } else if (t1 && !t2) {
+    subEl.textContent = TEXT.sub_after1[LANG];
+    progEl.textContent = TEXT.progress_1[LANG];
+  } else {
+    subEl.textContent = TEXT.sub_done[LANG];
+    progEl.textContent = TEXT.progress_2[LANG];
+
+    if (!localStorage.getItem("cozy_task_done_at")) {
+      localStorage.setItem("cozy_task_done_at", Date.now().toString());
     }
-};
+  }
+});
 </script>
-
 </body>
 </html>
