@@ -1,461 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>CozyHub</title>
-
+<meta charset="UTF-8">
+<title>Cozy Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: "Poppins", system-ui, sans-serif;
-  height: 100vh;
-  background: radial-gradient(circle at top, #1b2740 0, #050814 45%, #02030a 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  position: relative;
-  color: #ffffff;
-}
-
-/* BG glow */
-body::before {
-  content: "";
-  position: absolute;
-  inset: -40%;
-  background:
-    radial-gradient(circle at 10% 0%, rgba(0, 255, 255, 0.15), transparent 55%),
-    radial-gradient(circle at 90% 100%, rgba(0, 140, 255, 0.18), transparent 55%);
-  opacity: 0.9;
-  filter: blur(1px);
-  animation: bgMove 18s ease-in-out infinite alternate;
-  z-index: -2;
-}
-
-@keyframes bgMove {
-  0% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(-4%, 3%, 0) scale(1.05);
-  }
-  100% {
-    transform: translate3d(3%, -3%, 0) scale(1.07);
-  }
-}
-
-/* particles */
-#particles {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-}
-
-.particle {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: rgba(0, 255, 255, 0.95);
-  border-radius: 50%;
-  filter: blur(0.5px);
-  animation: floatUp linear infinite;
-  opacity: 0.8;
-}
-
-@keyframes floatUp {
-  0% {
-    transform: translateY(120vh) scale(0.6);
-    opacity: 0.3;
-  }
-  40% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-10vh) scale(1.1);
-    opacity: 0;
-  }
-}
-
-/* CARD */
-.card {
-  width: 390px;
-  max-width: 94vw;
-  background:
-    radial-gradient(circle at top, rgba(0, 255, 255, 0.12), transparent 40%),
-    rgba(5, 10, 22, 0.96);
-  padding: 32px 30px 26px;
-  border-radius: 26px;
-  text-align: center;
-  border: 1px solid rgba(0, 255, 255, 0.32);
-  box-shadow:
-    0 0 40px rgba(0, 255, 255, 0.3),
-    0 0 80px rgba(0, 255, 255, 0.18);
-  position: relative;
-}
-
-/* glow vòng tròn */
-.card::before {
-  content: "";
-  position: absolute;
-  top: -120px;
-  left: 50%;
-  width: 220px;
-  height: 220px;
-  transform: translateX(-50%);
-  background: radial-gradient(circle, rgba(0, 255, 255, 0.55), transparent 70%);
-  opacity: 0.55;
-  filter: blur(18px);
-  z-index: -1;
-}
-
-.logo {
-  width: 110px;
-  height: 110px;
-  margin: 0 auto 10px;
-  border-radius: 50%;
-  background: url("https://raw.githubusercontent.com/aovo4504-bit/Cozyhub/refs/heads/main/IMG_0830.png")
-    center/cover;
-  box-shadow:
-    0 0 16px rgba(0, 255, 255, 0.9),
-    0 0 36px rgba(0, 255, 255, 0.75);
-}
-
-.title {
-  font-size: 30px;
-  color: #e9fcff;
-  font-weight: 700;
-  margin-bottom: 6px;
-  letter-spacing: 1px;
-  text-shadow:
-    0 0 16px rgba(0, 255, 255, 0.8),
-    0 0 30px rgba(0, 255, 255, 0.4);
-}
-
-/* badge nhỏ */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 11px;
-  background: rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(0, 255, 255, 0.4);
-  margin-bottom: 12px;
-  opacity: 0.9;
-}
-.badge-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #00ff9d;
-  box-shadow: 0 0 10px rgba(0, 255, 157, 0.9);
-}
-.badge-text {
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 600;
-  font-size: 10px;
-  color: #bffcff;
-}
-
-.sub {
-  font-size: 14px;
-  opacity: 0.9;
-  margin-bottom: 22px;
-  min-height: 38px;
-}
-
-.btn {
-  width: 100%;
-  padding: 12px 0;
-  border: none;
-  border-radius: 12px;
-  background: linear-gradient(90deg, #00eaff, #00ffa3);
-  color: #001015;
-  cursor: pointer;
-  font-size: 17px;
-  font-weight: 600;
-  box-shadow:
-    0 0 26px rgba(0, 255, 255, 0.7),
-    0 0 40px rgba(0, 255, 163, 0.5);
-  transition: 0.22s;
-}
-
-.btn:hover {
-  transform: translateY(-1px) scale(1.03);
-  box-shadow:
-    0 0 32px rgba(0, 255, 255, 0.9),
-    0 0 48px rgba(0, 255, 163, 0.7);
-}
-
-.btn:active {
-  transform: scale(0.97);
-  box-shadow:
-    0 0 18px rgba(0, 255, 255, 0.7),
-    0 0 30px rgba(0, 255, 163, 0.5);
-}
-
-.progress-text {
-  margin-top: 8px;
-  font-size: 12px;
-  opacity: 0.75;
-}
-
-/* ICONS */
-.icons {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  gap: 22px;
-}
-
-.icons img {
-  width: 46px;
-  height: 46px;
-  cursor: pointer;
-  filter:
-    drop-shadow(0 0 12px rgba(0, 255, 255, 0.95))
-    drop-shadow(0 0 26px rgba(0, 180, 255, 0.85));
-  animation: ultraBreath 3s ease-in-out infinite;
-  transition: 0.25s;
-}
-
-.icons img:hover {
-  transform: scale(1.25);
-  filter:
-    drop-shadow(0 0 22px rgba(0, 255, 255, 1))
-    drop-shadow(0 0 42px rgba(0, 180, 255, 1));
-  animation: ultraShake 0.28s ease;
-}
-
-@keyframes ultraBreath {
-  0% {
-    filter: drop-shadow(0 0 6px cyan);
-  }
-  50% {
-    filter: drop-shadow(0 0 18px cyan);
-  }
-  100% {
-    filter: drop-shadow(0 0 6px cyan);
-  }
-}
-
-@keyframes ultraShake {
-  0% {
-    transform: scale(1.1);
-  }
-  50% {
-    transform: scale(1.25);
-  }
-  100% {
-    transform: scale(1.15);
-  }
-}
-
-@media (max-width: 480px) {
-  .card {
-    width: 340px;
-    padding: 28px 22px 22px;
-  }
-  .title {
-    font-size: 26px;
-  }
-}
+    body {
+        margin:0;
+        background:#050811;
+        font-family:'Poppins',sans-serif;
+        overflow:hidden;
+    }
+    .bg-dots {
+        position:fixed; inset:0;
+        background:url('https://i.ibb.co/0j1zV42/dots.gif');
+        opacity:0.25;
+        z-index:-1;
+    }
+    .card {
+        width:420px;
+        margin:90px auto;
+        padding:35px;
+        background:rgba(7,11,20,0.9);
+        border-radius:25px;
+        text-align:center;
+        color:white;
+        box-shadow:0 0 40px #00eaff;
+    }
+    .logo {
+        width:120px;height:120px;
+        margin:0 auto 20px;
+        background:url('https://raw.githubusercontent.com/aovo4504-bit/Cozyhub/refs/heads/main/IMG_0830.png') center/cover;
+        border-radius:50%;
+        box-shadow:0 0 25px #00eaff;
+    }
+    .btn {
+        width:100%;padding:15px;
+        margin-top:20px;
+        font-size:18px;
+        font-weight:600;
+        color:#001015;
+        background:#00eaff;
+        border:none;border-radius:12px;
+        cursor:pointer;
+        transition:0.2s;
+    }
+    .btn:hover { transform:scale(1.05); }
+    .icons img {
+        width:48px;
+        margin:18px 12px;
+        filter:drop-shadow(0 0 10px #00eaff);
+        cursor:pointer;
+    }
 </style>
+
+<script>
+//==================== AUTO LANGUAGE ====================//
+let langRaw = (navigator.language || "en").toLowerCase();
+let lang = langRaw.startsWith("vi") ? "vi" : "en";
+
+const TEXT = {
+  title: { en:"Cozy Hub", vi:"Cozy Hub" },
+  sub:   { en:"Click below to complete missions and get your key.", vi:"Bấm nút bên dưới để làm nhiệm vụ và nhận Key." },
+  get:   { en:"Get Key", vi:"Nhận Key" }
+};
+
+//==================== RESET TASK 10 MIN ====================//
+(function resetTask(){
+    const last = localStorage.getItem("cozy_task_done_at");
+    if(last){
+        const diff = Date.now() - Number(last);
+        if(diff >= 10 * 60 * 1000){
+            localStorage.removeItem("cozy_task1");
+            localStorage.removeItem("cozy_task2");
+            localStorage.removeItem("cozy_task_done_at");
+        }
+    }
+})();
+</script>
 </head>
+
 <body>
-<div id="particles"></div>
+<div class="bg-dots"></div>
 
 <div class="card">
-  <div class="logo"></div>
+    <div class="logo"></div>
+    <h1 id="title"></h1>
+    <p id="sub"></p>
 
-  <div class="title">Cozy Hub</div>
+    <button class="btn" onclick="startFlow()" id="startBtn">Get Key</button>
 
-  <div class="badge">
-    <span class="badge-dot"></span>
-    <span class="badge-text" id="badgeText">PREMIUM KEY SYSTEM</span>
-  </div>
-
-  <div class="sub" id="subText">Loading...</div>
-
-  <button class="btn" id="btnText" onclick="startFlow()">
-    Get Key
-  </button>
-
-  <div class="progress-text" id="progressText"></div>
-
-  <div class="icons">
-    <a href="https://www.youtube.com/@VoAo-v2g" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" />
-    </a>
-    <a href="https://www.tiktok.com/@cozyhub15" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok" />
-    </a>
-    <a href="https://discord.gg/YOUR_INVITE" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="Discord" />
-    </a>
-  </div>
+    <div class="icons">
+        <a href="https://www.youtube.com/@VoAo-v2g"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
+        <a href="https://www.tiktok.com/@cozyhub15"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png"></a>
+        <a href="https://discord.com"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png"></a>
+    </div>
 </div>
 
 <script>
-/* ========== PARTICLES ========== */
-const particlesBox = document.getElementById("particles");
+document.getElementById("title").textContent = TEXT.title[lang];
+document.getElementById("sub").textContent = TEXT.sub[lang];
+document.getElementById("startBtn").textContent = TEXT.get[lang];
 
-function spawnParticle() {
-  const p = document.createElement("div");
-  p.classList.add("particle");
-  p.style.left = Math.random() * 100 + "vw";
-  p.style.animationDuration = 6 + Math.random() * 6 + "s";
-  particlesBox.appendChild(p);
-  setTimeout(() => p.remove(), 12000);
+//==================== START FLOW ====================//
+function startFlow(){
+    const t1 = localStorage.getItem("cozy_task1");
+    const t2 = localStorage.getItem("cozy_task2");
+
+    if(!t1) return location.href = "task1/index.html";
+    if(!t2) return location.href = "task2/index.html";
+
+    location.href = "getkey.html";
 }
-
-setInterval(spawnParticle, 140);
-
-/* ========== LANGUAGE (DEFAULT ENGLISH) ========== */
-let rawLang = (navigator.language || "en").toLowerCase();
-
-/*
-  ALWAYS DEFAULT ENGLISH.
-  Only TH / ID / PH auto-switch.
-  Vietnamese (vi-VN) vẫn dùng English.
-*/
-let LANG =
-  rawLang.startsWith("th") ? "th" :
-  rawLang.startsWith("id") ? "id" :
-  (rawLang.startsWith("ph") || rawLang.startsWith("fil") || rawLang.startsWith("tl"))
-    ? "ph"
-    : "en";
-
-const TEXT = {
-  badge: {
-    en: "PREMIUM KEY SYSTEM",
-    vi: "HỆ THỐNG KEY CAO CẤP",
-    th: "ระบบคีย์ระดับพรีเมียม",
-    id: "SISTEM KEY PREMIUM",
-    ph: "PREMIUM KEY SYSTEM"
-  },
-  btn: {
-    en: "Get Key",
-    vi: "Nhận Key",
-    th: "รับคีย์",
-    id: "Dapatkan Key",
-    ph: "Kunin ang Key"
-  },
-  sub_start: {
-    en: "Press the button below to start mission 1 and get your Cozy Hub key.",
-    vi: "Nhấn nút bên dưới để làm nhiệm vụ 1 và nhận key Cozy Hub.",
-    th: "กดปุ่มด้านล่างเพื่อเริ่มภารกิจที่ 1 และรับคีย์ Cozy Hub",
-    id: "Tekan tombol di bawah untuk memulai misi 1 dan mendapatkan key Cozy Hub.",
-    ph: "Pindutin ang button sa ibaba para simulan ang mission 1 at makuha ang Cozy Hub key."
-  },
-  sub_after1: {
-    en: "Mission 1 completed — continue with mission 2.",
-    vi: "Bạn đã hoàn thành nhiệm vụ 1 — tiếp tục nhiệm vụ 2.",
-    th: "คุณทำภารกิจที่ 1 เสร็จแล้ว — ไปต่อภารกิจที่ 2",
-    id: "Misi 1 selesai — lanjut ke misi 2.",
-    ph: "Tapos na ang mission 1 — magpatuloy sa mission 2."
-  },
-  sub_done: {
-    en: "All missions completed — press the button to get your key.",
-    vi: "Bạn đã hoàn thành tất cả nhiệm vụ — bấm nút để nhận key.",
-    th: "ทำภารกิจครบแล้ว — กดปุ่มเพื่อรับคีย์",
-    id: "Semua misi selesai — tekan tombol untuk mendapatkan key.",
-    ph: "Tapos mo na lahat ng missions — pindutin ang button para kunin ang key."
-  },
-  progress_0: {
-    en: "Progress: 0 / 2 missions.",
-    vi: "Tiến độ: 0 / 2 nhiệm vụ.",
-    th: "ความคืบหน้า: 0 / 2 ภารกิจ",
-    id: "Progres: 0 / 2 misi.",
-    ph: "Progress: 0 / 2 missions."
-  },
-  progress_1: {
-    en: "Progress: 1 / 2 missions.",
-    vi: "Tiến độ: 1 / 2 nhiệm vụ.",
-    th: "ความคืบหน้า: 1 / 2 ภารกิจ",
-    id: "Progres: 1 / 2 misi.",
-    ph: "Progress: 1 / 2 missions."
-  },
-  progress_2: {
-    en: "Progress: 2 / 2 missions.",
-    vi: "Tiến độ: 2 / 2 nhiệm vụ.",
-    th: "ความคืบหน้า: 2 / 2 ภารกิจ",
-    id: "Progres: 2 / 2 misi.",
-    ph: "Progress: 2 / 2 missions."
-  }
-};
-
-/* ========== RESET 24H ========== */
-(function resetCheck() {
-  const last = localStorage.getItem("cozy_task_done_at");
-  if (last) {
-    const diff = Date.now() - Number(last);
-    if (diff >= 24 * 60 * 60 * 1000) {
-      localStorage.removeItem("cozy_task1");
-      localStorage.removeItem("cozy_task2");
-      localStorage.removeItem("cozy_task_done_at");
-    }
-  }
-})();
-
-/* ========== LINKS NHIỆM VỤ ========== */
-const LINK_TASK1 = "https://direct-link.net/1457968/wqITOYXxDOMd";
-const LINK_TASK2 = "https://link-target.net/1457968/nP7uWHQKwUUq";
-const GETKEY_URL = "https://aovo4504-bit.github.io/Cozyhub/getkey.html";
-
-/* ========== FLOW NHIỆM VỤ ========== */
-function startFlow() {
-  const t1 = localStorage.getItem("cozy_task1");
-  const t2 = localStorage.getItem("cozy_task2");
-
-  if (!t1) {
-    // chưa làm nhiệm vụ 1
-    window.location.href = LINK_TASK1;
-  } else if (t1 === "done" && !t2) {
-    // đã làm nv1, chưa làm nv2
-    window.location.href = LINK_TASK2;
-  } else {
-    // đã xong 2 nhiệm vụ
-    window.location.href = GETKEY_URL;
-  }
-}
-
-/* ========== UPDATE UI KHI LOAD ========== */
-window.addEventListener("load", () => {
-  const t1 = localStorage.getItem("cozy_task1");
-  const t2 = localStorage.getItem("cozy_task2");
-
-  const btnEl = document.getElementById("btnText");
-  const badgeEl = document.getElementById("badgeText");
-  const subEl = document.getElementById("subText");
-  const progEl = document.getElementById("progressText");
-
-  btnEl.textContent = TEXT.btn[LANG];
-  badgeEl.textContent = TEXT.badge[LANG];
-
-  if (!t1) {
-    subEl.textContent = TEXT.sub_start[LANG];
-    progEl.textContent = TEXT.progress_0[LANG];
-  } else if (t1 && !t2) {
-    subEl.textContent = TEXT.sub_after1[LANG];
-    progEl.textContent = TEXT.progress_1[LANG];
-  } else {
-    subEl.textContent = TEXT.sub_done[LANG];
-    progEl.textContent = TEXT.progress_2[LANG];
-
-    if (!localStorage.getItem("cozy_task_done_at")) {
-      localStorage.setItem("cozy_task_done_at", Date.now().toString());
-    }
-  }
-});
 </script>
+
 </body>
 </html>
