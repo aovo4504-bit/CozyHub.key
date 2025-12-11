@@ -142,20 +142,20 @@ body::before{
 
   <div class="icons">
     <a href="https://www.youtube.com/@VoAo-v2g" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
     </a>
     <a href="https://www.tiktok.com/@cozyhub15" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="">
+      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok">
     </a>
     <a href="https://discord.com" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="">
+      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="Discord">
     </a>
   </div>
 </div>
 
 <script>
 // particles
-const box = document.getElementById("particles");
+const box=document.getElementById("particles");
 function spawnParticle(){
   const p=document.createElement("div");
   p.classList.add("particle");
@@ -166,7 +166,7 @@ function spawnParticle(){
 }
 setInterval(spawnParticle,140);
 
-// language default EN
+// default language = EN (chỉ auto TH/ID/PH)
 let rawLang=(navigator.language||"en").toLowerCase();
 let LANG =
   rawLang.startsWith("th") ? "th" :
@@ -185,7 +185,7 @@ const TEXT={
   p2:{en:"Progress: 2 / 2 missions.",vi:"Tiến độ: 2 / 2 nhiệm vụ.",th:"ความคืบหน้า: 2 / 2 ภารกิจ",id:"Progress: 2 / 2 misi.",ph:"Progress: 2 / 2 missions."}
 };
 
-// reset after 10 minutes
+// reset sau 10 phút
 (function resetTask(){
   const last=localStorage.getItem("cozy_task_done_at");
   if(last){
@@ -198,38 +198,46 @@ const TEXT={
   }
 })();
 
-// external pages
-const TASK1_PAGE="https://aovo4504-bit.github.io/task1/";
-const TASK2_PAGE="https://aovo4504-bit.github.io/task2/";
-const GETKEY_URL="https://aovo4504-bit.github.io/Cozyhub/getkey.html";
+const NV1_URL   = "https://direct-link.net/1457968/wqITOYXxDOMd";
+const TASK1_URL = "https://aovo4504-bit.github.io/task1/";
+const TASK2_URL = "https://aovo4504-bit.github.io/task2/";
+const GETKEY_URL= "https://aovo4504-bit.github.io/Cozyhub/getkey.html";
 
+// start flow: Home → NV1 → Task1 → NV2 → Task2 → GetKey
 function startFlow(){
   const t1=localStorage.getItem("cozy_task1");
   const t2=localStorage.getItem("cozy_task2");
-  if(!t1)      return location.href=TASK1_PAGE;
-  if(t1 && !t2)return location.href=TASK2_PAGE;
-  return location.href=GETKEY_URL;
+  if(!t1){
+    // chưa qua mission1 ⇒ đi NV1
+    location.href = NV1_URL;
+  }else if(t1 && !t2){
+    // đã qua mission1 ⇒ đi NV2
+    location.href = "https://link-target.net/1457968/nP7uWHQKwUUq";
+  }else{
+    // đã đủ 2 mission ⇒ GetKey
+    location.href = GETKEY_URL;
+  }
 }
 
 window.addEventListener("load",()=>{
   const t1=localStorage.getItem("cozy_task1");
   const t2=localStorage.getItem("cozy_task2");
 
-  document.getElementById("btnText").textContent=TEXT.btn[LANG];
-  document.getElementById("badgeText").textContent=TEXT.badge[LANG];
+  document.getElementById("btnText").textContent   = TEXT.btn[LANG];
+  document.getElementById("badgeText").textContent = TEXT.badge[LANG];
 
-  const sub=document.getElementById("subText");
-  const prog=document.getElementById("progressText");
+  const sub  = document.getElementById("subText");
+  const prog = document.getElementById("progressText");
 
   if(!t1){
-    sub.textContent=TEXT.sub_start[LANG];
-    prog.textContent=TEXT.p0[LANG];
+    sub.textContent  = TEXT.sub_start[LANG];
+    prog.textContent = TEXT.p0[LANG];
   }else if(t1 && !t2){
-    sub.textContent=TEXT.sub_after1[LANG];
-    prog.textContent=TEXT.p1[LANG];
+    sub.textContent  = TEXT.sub_after1[LANG];
+    prog.textContent = TEXT.p1[LANG];
   }else{
-    sub.textContent=TEXT.sub_done[LANG];
-    prog.textContent=TEXT.p2[LANG];
+    sub.textContent  = TEXT.sub_done[LANG];
+    prog.textContent = TEXT.p2[LANG];
     if(!localStorage.getItem("cozy_task_done_at")){
       localStorage.setItem("cozy_task_done_at",Date.now());
     }
