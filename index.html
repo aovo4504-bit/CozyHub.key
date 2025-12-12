@@ -1,140 +1,105 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Cozy Hub</title>
-
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-body {
-  margin: 0;
-  font-family: Poppins, sans-serif;
-  background: linear-gradient(135deg, #000814, #001d3d);
-  height: 100vh;
-  overflow: hidden;
-  color: white;
-}
-
-/* BACKGROUND ANIMATION */
-.bg {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at top, #002855 0%, #001233 50%, #000814 100%);
-  animation: float 10s infinite alternate ease-in-out;
-  z-index: -1;
-}
-@keyframes float {
-  from { transform: translateY(-10px); }
-  to   { transform: translateY(10px); }
-}
-
-/* CONTAINER */
-.card {
-  width: 420px;
-  max-width: 92vw;
-  margin: 120px auto;
-  background: rgba(255,255,255,0.05);
-  padding: 40px 30px;
-  border-radius: 24px;
-  text-align: center;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 0 30px #00e5ff55;
-  border: 1px solid #00eaff33;
-}
-
-/* LOGO */
-.logo {
-  width: 110px;
-  height: 110px;
-  margin: 0 auto 20px;
-  border-radius: 50%;
-  background: url("https://raw.githubusercontent.com/aovo4504-bit/Cozyhub/refs/heads/main/IMG_0830.png") center/cover;
-  box-shadow: 0 0 20px #00eaffaa;
-}
-
-/* TITLE */
-.title {
-  font-size: 34px;
-  font-weight: 700;
-  margin-bottom: 10px;
-  text-shadow: 0 0 20px #00eaff;
-}
-
-/* SUBTEXT */
-.desc {
-  opacity: 0.85;
-  margin-bottom: 22px;
-  font-size: 15px;
-}
-
-/* BUTTON */
-.btn {
-  width: 100%;
-  padding: 14px;
-  border-radius: 10px;
-  background: #00eaff;
-  color: #00141a;
-  font-size: 18px;
-  border: none;
-  cursor: pointer;
-  font-weight: 700;
-  box-shadow: 0 0 18px #00eaffaa;
-  transition: 0.25s;
-}
-.btn:hover {
-  transform: scale(1.05);
-}
-
-/* ICONS */
-.icons {
-  margin-top: 28px;
-  display: flex;
-  justify-content: center;
-  gap: 22px;
-}
-.icons img {
-  width: 36px;
-  filter: drop-shadow(0 0 8px #00eaffaa);
-  transition: 0.25s;
-}
-.icons img:hover {
-  transform: scale(1.2);
-}
+:root{--bg:#050811;--cyan:#00eaff;--stroke:rgba(0,234,255,.25);--text:#e9fbff;--muted:rgba(233,251,255,.72)}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;font-family:Poppins,system-ui,sans-serif;background:#050811;color:var(--text);overflow:hidden}
+.bg{position:fixed;inset:-40%;background:
+radial-gradient(circle at 30% 20%, rgba(0,234,255,.14), transparent 45%),
+radial-gradient(circle at 70% 30%, rgba(0,255,157,.10), transparent 42%),
+radial-gradient(circle at 50% 80%, rgba(120,90,255,.10), transparent 50%);
+filter:blur(10px);animation:float 10s ease-in-out infinite;z-index:-1}
+@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(3%,2%)}}
+.wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:22px}
+.card{width:min(430px,92vw);border-radius:24px;background:rgba(7,11,20,.86);
+border:1px solid var(--stroke);box-shadow:0 0 45px rgba(0,234,255,.22),0 0 120px rgba(0,234,255,.08);
+padding:28px 24px 22px;text-align:center;backdrop-filter:blur(10px)}
+.logo{width:105px;height:105px;margin:0 auto 14px;border-radius:50%;
+background:url('https://raw.githubusercontent.com/aovo4504-bit/Cozyhub/refs/heads/main/IMG_0830.png') center/cover;
+box-shadow:0 0 18px rgba(0,234,255,.55),0 0 60px rgba(0,234,255,.20)}
+h1{margin:0;font-size:34px;font-weight:800;color:var(--cyan);text-shadow:0 0 18px rgba(0,234,255,.55)}
+.sub{margin:10px auto 16px;color:var(--muted);font-size:13.8px;line-height:1.35;max-width:340px}
+.btn{width:100%;border:none;border-radius:14px;padding:14px 16px;font-weight:800;letter-spacing:.4px;cursor:pointer;color:#001018;
+background:linear-gradient(90deg, var(--cyan), #7df6ff);box-shadow:0 0 30px rgba(0,234,255,.35);transition:.18s}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
+.row{display:flex;justify-content:center;margin-top:12px}
+.lang{appearance:none;background:rgba(0,0,0,.25);border:1px solid rgba(0,234,255,.22);color:var(--text);
+padding:10px 12px;border-radius:12px;font-weight:700}
+.icons{display:flex;gap:14px;justify-content:center;margin-top:14px}
+.icon{width:44px;height:44px;border-radius:14px;background:rgba(0,0,0,.22);border:1px solid rgba(0,234,255,.18);
+display:grid;place-items:center;box-shadow:0 0 18px rgba(0,234,255,.12);transition:.18s}
+.icon:hover{transform:translateY(-2px);border-color:rgba(0,234,255,.35);box-shadow:0 0 28px rgba(0,234,255,.18)}
+.icon img{width:22px;height:22px;filter:drop-shadow(0 0 8px rgba(0,234,255,.25))}
+.small{margin-top:10px;font-size:11px;opacity:.55}
 </style>
 </head>
 <body>
-
 <div class="bg"></div>
+<div class="wrap">
+  <div class="card">
+    <div class="logo"></div>
+    <h1>Cozy Hub</h1>
+    <div id="sub" class="sub">Press the button below to start Mission 1 and get your key.</div>
 
-<div class="card">
-  <div class="logo"></div>
+    <button id="btn" class="btn">Get Key</button>
 
-  <div class="title">Cozy Hub</div>
-  <div class="desc">
-    Complete 2 missions to receive your key.
-  </div>
+    <div class="row">
+      <select id="lang" class="lang">
+        <option value="en">English</option>
+        <option value="vi">Tiếng Việt</option>
+        <option value="th">ไทย</option>
+        <option value="id">Indonesia</option>
+        <option value="ph">Filipino</option>
+      </select>
+    </div>
 
-  <button class="btn" onclick="startMission()">Start Mission</button>
+    <div class="icons">
+      <a class="icon" href="https://www.youtube.com/@VoAo-v2g" target="_blank" rel="noopener">
+        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
+      </a>
+      <a class="icon" href="https://www.tiktok.com/@cozyhub15" target="_blank" rel="noopener">
+        <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok">
+      </a>
+      <a class="icon" href="https://discord.com/" target="_blank" rel="noopener">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord">
+      </a>
+    </div>
 
-  <div class="icons">
-    <a href="https://www.youtube.com/@VoAo-v2g" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
-    </a>
-    <a href="https://www.tiktok.com/@cozyhub15" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
-    </a>
-    <a href="https://discord.com" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png">
-    </a>
+    <div class="small">VIP PRO • 2 Missions • Key 24h</div>
   </div>
 </div>
 
 <script>
-function startMission() {
-  localStorage.removeItem("cozy_task2");
-  localStorage.removeItem("cozy_task1");
-  location.href = "https://direct-link.net/1457968/wqITOYXxDOMd";
-}
-</script>
+const VERIFY1 = "https://cozyhub-verify1.aovo4504.workers.dev/"; // NV1 link
 
+const TEXT = {
+  sub:{
+    en:"Press the button below to start Mission 1 and get your key.",
+    vi:"Bấm nút bên dưới để bắt đầu Nhiệm vụ 1 và nhận key.",
+    th:"กดปุ่มด้านล่างเพื่อเริ่มภารกิจ 1 และรับคีย์",
+    id:"Tekan tombol di bawah untuk memulai Misi 1 dan mendapatkan key.",
+    ph:"Pindutin ang button sa ibaba para simulan ang Mission 1 at makuha ang key."
+  },
+  btn:{en:"Get Key",vi:"Nhận Key",th:"รับคีย์",id:"Dapatkan Key",ph:"Kunin ang Key"}
+};
+
+// default EN (không auto theo trình duyệt)
+function getLang(){ return (localStorage.getItem("cozy_lang") || "en").toLowerCase(); }
+function apply(){
+  const l=getLang();
+  document.getElementById("lang").value=l;
+  document.getElementById("sub").textContent=(TEXT.sub[l]||TEXT.sub.en);
+  document.getElementById("btn").textContent=(TEXT.btn[l]||TEXT.btn.en);
+}
+document.getElementById("lang").onchange=e=>{ localStorage.setItem("cozy_lang", e.target.value); apply(); };
+apply();
+
+document.getElementById("btn").onclick=()=>{ location.href = VERIFY1; };
+</script>
 </body>
 </html>
