@@ -1,351 +1,41 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Cozy Hub</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <style>
-:root{
-  --bg:#050811;
-  --card:#071326cc;
-  --cyan:#00f0ff;
-  --cyan2:#00c6ff;
-  --text:#eaf9ff;
-  --muted:#a8c7d3;
-  --danger:#ff4d6d;
-  --ok:#2bff88;
-}
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
-a{color:inherit;text-decoration:none}
-.wrap{position:relative;height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
-.bg-canvas{position:absolute;inset:0;z-index:0}
-.card{
-  position:relative;z-index:2;
-  width:min(420px,92vw);
-  background:linear-gradient(180deg,#061426ee,#060a14dd);
-  border:1px solid rgba(0,240,255,.25);
-  border-radius:22px;
-  padding:26px 24px 20px;
-  box-shadow: 0 0 22px rgba(0,240,255,.16), 0 0 64px rgba(0,240,255,.08);
-  backdrop-filter: blur(10px);
-}
-.logo{
-  width:92px;height:92px;border-radius:50%;
-  margin:0 auto 10px;
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), rgba(255,255,255,0) 60%),
-              url('https://i.imgur.com/QmY1w3N.png');
-  background-size:cover;
-  border:1px solid rgba(0,240,255,.32);
-  box-shadow:0 0 0 10px rgba(0,240,255,.04), 0 0 28px rgba(0,240,255,.28);
-}
-.title{
-  font-size:34px; font-weight:800; text-align:center; letter-spacing:.3px;
-  color:var(--cyan);
-  text-shadow:0 0 18px rgba(0,240,255,.35);
-}
-.sub{
-  text-align:center; color:var(--muted);
-  margin:10px 6px 18px;
-  line-height:1.35;
-}
-.btn{
-  width:100%;
-  border:none; cursor:pointer;
-  padding:13px 16px;
-  border-radius:14px;
-  background:linear-gradient(90deg,var(--cyan),var(--cyan2));
-  color:#001018;
-  font-weight:800;
-  letter-spacing:.2px;
-  box-shadow:0 0 18px rgba(0,240,255,.22);
-  position:relative;
-  overflow:hidden;
-}
-.btn:disabled{opacity:.6; cursor:not-allowed}
-.btn::after{
-  content:"";
-  position:absolute; inset:-60% -40%;
-  background:linear-gradient(120deg,rgba(255,255,255,.0),rgba(255,255,255,.35),rgba(255,255,255,0));
-  transform:translateX(-60%) rotate(12deg);
-  transition:transform .7s ease;
-}
-.btn:hover::after{transform:translateX(60%) rotate(12deg)}
-.row{
-  display:flex; gap:10px; margin-top:10px;
-}
-.pill{
-  flex:1;
-  border:1px solid rgba(0,240,255,.18);
-  background:rgba(0,240,255,.06);
-  color:var(--muted);
-  border-radius:14px;
-  padding:10px 12px;
-  font-size:12px;
-  text-align:center;
-}
-.msg{
-  margin-top:12px;
-  border-radius:14px;
-  padding:10px 12px;
-  font-size:13px;
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.06);
-  display:none;
-}
-.msg.show{display:block}
-.msg.ok{border-color:rgba(43,255,136,.35); background:rgba(43,255,136,.08)}
-.msg.error{border-color:rgba(255,77,109,.35); background:rgba(255,77,109,.08)}
-.icons{
-  display:flex; gap:14px; justify-content:center;
-  margin-top:16px;
-}
-.iconbtn{
-  width:46px;height:46px;border-radius:14px;
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(0,240,255,.07);
-  border:1px solid rgba(0,240,255,.20);
-  box-shadow:0 0 16px rgba(0,240,255,.10);
-  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
-}
-.iconbtn:hover{
-  transform:translateY(-2px) scale(1.03);
-  box-shadow:0 0 24px rgba(0,240,255,.18);
-  background:rgba(0,240,255,.10);
-}
-.iconbtn img{width:26px;height:26px; filter: drop-shadow(0 0 10px rgba(0,240,255,.25));}
-.small{
-  text-align:center; font-size:11px; color:rgba(168,199,211,.75);
-  margin-top:10px;
-}
-.kbox{
-  margin-top:14px;
-  padding:12px 12px;
-  border-radius:14px;
-  background:rgba(0,0,0,.28);
-  border:1px solid rgba(0,240,255,.18);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  text-align:center;
-  user-select:text;
-}
-.krow{display:flex;gap:10px;margin-top:10px}
-.krow .btn{flex:1}
-.topbar{
-  display:flex;justify-content:space-between;align-items:center;
-  gap:10px;margin-bottom:8px
-}
-.langsel{
-  background:rgba(0,240,255,.08);
-  border:1px solid rgba(0,240,255,.18);
-  color:var(--text);
-  border-radius:12px;
-  padding:8px 10px;
-  font-size:12px;
-}
-</style>
-</head>
-<body>
-  <canvas id="bg" class="bg-canvas"></canvas>
-  <div class="wrap">
-    <div class="card">
-      <div class="topbar">
-        <div style="opacity:.75;font-size:12px">VIP PRO</div>
-        <select id="langsel" class="langsel" title="Language">
-          <option value="en">EN</option>
-          <option value="vi">VI</option>
-          <option value="th">TH</option>
-          <option value="id">ID</option>
-          <option value="ph">PH</option>
-        </select>
-      </div>
-      <div class="logo"></div>
-      <div class="title">Cozy Hub</div>
-      <div class="sub" id="subtxt"></div>
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cozy Hub</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/lang.js"></script>
+<script src="assets/config.js"></script>
+</head><body>
+<div class="bg"></div><canvas id="stars"></canvas>
+<div class="card">
+  <div class="logo"></div>
+  <div class="title" data-i18n="cozyhub">Cozy Hub</div>
+  <div class="sub" data-i18n="subtitle_home">Click below to complete missions and get your key.</div>
 
-      <button class="btn" id="btnStart">Get Key</button>
+  <select class="select" onchange="applyLang(this.value)">
+    <option value="en" selected>English</option>
+    <option value="vi">Tiếng Việt</option>
+    <option value="th">ไทย</option>
+    <option value="id">Indonesia</option>
+    <option value="ph">Filipino</option>
+    <option value="es">Español</option>
+    <option value="pt">Português</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+    <option value="ru">Русский</option>
+    <option value="tr">Türkçe</option>
+    <option value="ar">العربية</option>
+  </select>
 
-      <div class="row">
-        <div class="pill" id="p1"></div>
-        <div class="pill" id="p2"></div>
-      </div>
+  <button class="btn" onclick="location.href=COZY.api.verify1" data-i18n="get_key">Get Key</button>
 
-      <div class="msg" id="msg"></div>
-
-      <div class="icons">
-        <a class="iconbtn" href="https://www.youtube.com/@VoAo-v2g" target="_blank" rel="noopener">
-          <img alt="YouTube" src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
-        </a>
-        <a class="iconbtn" href="https://www.tiktok.com/@cozyhub15" target="_blank" rel="noopener">
-          <img alt="TikTok" src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
-        </a>
-        <a class="iconbtn" href="https://discord.gg/" target="_blank" rel="noopener">
-          <img alt="Discord" src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png">
-        </a>
-      </div>
-
-      <div class="small" id="small"></div>
-    </div>
+  <div class="icons">
+    <a href="https://www.youtube.com/@VoAo-v2g" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
+    <a href="https://www.tiktok.com/@cozyhub15" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png"></a>
+    <a href="https://discord.gg/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png"></a>
   </div>
 
-<script>
-(function(){
-  const c=document.getElementById('bg');
-  if(!c) return;
-  const ctx=c.getContext('2d');
-  let w,h,parts=[];
-  function resize(){
-    w=c.width=window.innerWidth; h=c.height=window.innerHeight;
-    parts=Array.from({length:Math.min(140, Math.floor((w*h)/14000))}, ()=>({
-      x:Math.random()*w, y:Math.random()*h,
-      r:1+Math.random()*2.6,
-      vx:(Math.random()-.5)*.35, vy:(Math.random()-.5)*.35,
-      a:.15+Math.random()*.35
-    }));
-  }
-  window.addEventListener('resize',resize,{passive:true});
-  resize();
-  function tick(){
-    ctx.clearRect(0,0,w,h);
-    // glow dots
-    for(const p of parts){
-      p.x+=p.vx; p.y+=p.vy;
-      if(p.x< -20) p.x=w+20;
-      if(p.x>w+20) p.x=-20;
-      if(p.y< -20) p.y=h+20;
-      if(p.y>h+20) p.y=-20;
-      ctx.beginPath();
-      ctx.fillStyle=`rgba(0,240,255,${p.a})`;
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fill();
-    }
-    // subtle connections
-    for(let i=0;i<parts.length;i++){
-      for(let j=i+1;j<parts.length;j++){
-        const a=parts[i], b=parts[j];
-        const dx=a.x-b.x, dy=a.y-b.y;
-        const d=dx*dx+dy*dy;
-        if(d<150*150){
-          const alpha = 0.06*(1-d/(150*150));
-          ctx.strokeStyle=`rgba(0,240,255,${alpha})`;
-          ctx.lineWidth=1;
-          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(tick);
-  }
-  tick();
-})();
-</script>
-<script type="module">
-
-const LANGS = ["en","vi","th","id","ph"];
-function getLang(){
-  const q = new URLSearchParams(location.search);
-  const forced = (q.get("lang")||"").toLowerCase();
-  if(LANGS.includes(forced)) return forced;
-  // default EN always
-  return "en";
-}
-const lang = getLang();
-function t(dict){ return dict[lang] ?? dict.en ?? ""; }
-
-
-const TEXT = {
-  sub: {
-    en:"Press the button below to start Mission 1 and get your key.",
-    vi:"Bấm nút bên dưới để bắt đầu Nhiệm Vụ 1 và nhận key.",
-    th:"กดปุ่มด้านล่างเพื่อเริ่มภารกิจ 1 และรับคีย์",
-    id:"Tekan tombol di bawah untuk memulai Misi 1 dan mendapatkan key.",
-    ph:"Pindutin ang button para simulan ang Mission 1 at makuha ang key."
-  },
-  pill1: {
-    en:"Security: VIP PRO",
-    vi:"Bảo mật: VIP PRO",
-    th:"ความปลอดภัย: VIP PRO",
-    id:"Keamanan: VIP PRO",
-    ph:"Seguridad: VIP PRO"
-  },
-  pill2: {
-    en:"Key: 24 hours",
-    vi:"Key: 24 giờ",
-    th:"คีย์: 24 ชม.",
-    id:"Key: 24 jam",
-    ph:"Key: 24 oras"
-  },
-  start: { en:"Get Key", vi:"Nhận Key", th:"รับคีย์", id:"Dapatkan Key", ph:"Kunin ang Key" },
-  starting: { en:"Starting...", vi:"Đang bắt đầu...", th:"กำลังเริ่ม...", id:"Memulai...", ph:"Nagsisimula..." },
-  err: {
-    en:"System error. Please try again.",
-    vi:"Lỗi hệ thống. Vui lòng thử lại.",
-    th:"ระบบมีปัญหา โปรดลองอีกครั้ง",
-    id:"Terjadi kesalahan. Coba lagi.",
-    ph:"May error. Subukan ulit."
-  },
-  ok: {
-    en:"Mission 1 token created. Redirecting...",
-    vi:"Đã tạo token NV1. Đang chuyển hướng...",
-    th:"สร้างโทเค็นภารกิจ 1 แล้ว กำลังเปลี่ยนหน้า...",
-    id:"Token Misi 1 dibuat. Mengalihkan...",
-    ph:"Nagawa ang token. Nire-redirect..."
-  },
-  small:{en:"Complete 2 missions to get a 24h key.",vi:"Hoàn thành 2 nhiệm vụ để nhận key 24h.",th:"ทำ 2 ภารกิจเพื่อรับคีย์ 24 ชม.",id:"Selesaikan 2 misi untuk key 24 jam.",ph:"Tapusin ang 2 missions para sa 24h key."}
-};
-
-const CFG = {
-  VERIFY1: "https://cozyhub-verify1.aovo4504.workers.dev/",
-  // Your shortlink (Mission 1)
-  NV1_LINK: "https://direct-link.net/1457968/wqITOYXxDOMd"
-};
-
-function show(type, text){
-  const m=document.getElementById('msg');
-  m.className = "msg show " + (type==="error" ? "error":"ok");
-  m.textContent = text;
-}
-
-function setLangUI(){
-  document.getElementById("langsel").value = lang;
-  document.getElementById("subtxt").textContent = t(TEXT.sub);
-  document.getElementById("p1").textContent = t(TEXT.pill1);
-  document.getElementById("p2").textContent = t(TEXT.pill2);
-  document.getElementById("btnStart").textContent = t(TEXT.start);
-  document.getElementById("small").textContent = t(TEXT.small);
-}
-setLangUI();
-document.getElementById("langsel").addEventListener("change", (e)=>{
-  const v=e.target.value;
-  const q=new URLSearchParams(location.search); q.set("lang", v);
-  location.search = q.toString();
-});
-
-document.getElementById("btnStart").addEventListener("click", async ()=>{
-  const btn=document.getElementById("btnStart");
-  btn.disabled=true;
-  btn.textContent=t(TEXT.starting);
-  try{
-    const res = await fetch(CFG.VERIFY1 + "start", {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({ v:1 })
-    });
-    const data = await res.json();
-    if(!data.ok) throw new Error("bad");
-    // store token1
-    sessionStorage.setItem("cozy_t1", data.token);
-    show("ok", t(TEXT.ok));
-    // redirect to shortlink. Configure shortlink to return to /task1/?verify=1
-    setTimeout(()=>location.href = CFG.NV1_LINK, 600);
-  }catch(e){
-    console.error(e);
-    show("error", t(TEXT.err));
-    btn.disabled=false;
-    btn.textContent=t(TEXT.start);
-  }
-});
-</script>
-</body>
-</html>
+  <div class="small"></div>
+</div>
+<script>applyLang("en");</script>
+<script src="assets/stars.js"></script>
+</body></html>
